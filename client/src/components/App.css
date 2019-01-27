@@ -1,0 +1,36 @@
+h1 {
+  font-weight: normal;
+  font-size: 42px;
+}
+
+.split-parent {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.gutter:hover {
+  background: rgba(0, 0, 0, 0.01);
+}
+
+.gutter.gutter-horizontal {
+  cursor: ew-resize;
+  border: 1px solid lightgrey;
+  border-width: 0px 1px;
+}
+
+.gutter.gutter-vertical {
+  cursor: ns-resize;
+}
+
+.problem-pane {
+  display: flex;
+  flex-direction: column;
+}
+
+.problem-select {
+  display: flex;
+  flex-shrink: 0;
+  padding: 16px;
+  border-bottom: 1px solid lightgray;
+}

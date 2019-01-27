@@ -1,0 +1,19 @@
+.problem-area {
+  padding: 40px;
+  font-size: 14px;
+  overflow-y: auto;
+}
+
+.problem-area .title {
+  font-size: 24px;
+}
+
+.problem-area .section-title {
+  font-size: 18px;
+  margin-bottom: 0.3rem;
+}
+
+.problem-area .header {
+  text-align: center;
+  margin-bottom: 20px;
+}
