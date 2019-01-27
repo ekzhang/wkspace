@@ -5,7 +5,6 @@ const router = express.Router();
 const scraper = require('../scraper');
 const db = require('../database').get();
 
-/* GET api listing. */
 router.get('/', (req, res) => {
   res.send('api works');
 });

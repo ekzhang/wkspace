@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "mongo": "mkdir .mongodb; mongod --dbpath .mongodb",
-    "dev": "concurrently \"npm run mongo\" \"nodemon index.js\" \"cd client && npm start\"",
+    "dev": "concurrently \"nodemon index.js\" \"cd client && npm start\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
