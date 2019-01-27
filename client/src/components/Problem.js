@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Table } from 'reactstrap';
 import './Problem.css';
 import 'katex/dist/katex.min.css';
 import renderMathInElement from 'katex/contrib/auto-render/auto-render';
@@ -6,6 +7,10 @@ import renderMathInElement from 'katex/contrib/auto-render/auto-render';
 function textArray(ar) {
   return ar.map((paragraph, i) => <p key={i}>{paragraph}</p>);
 }
+
+// function codeElement(text) {
+//   return <code>{text.replace('\n', )}</code>
+// }
 
 class Problem extends Component {
   problemArea = React.createRef();
@@ -50,6 +55,24 @@ class Problem extends Component {
             </div>
           ) : null}
         </div>
+        {problem.statement.sampleTests.length ? (
+          <Table className="sample-tests">
+            <thead>
+              <tr>
+                <th>Sample Input</th>
+                <th>Sample Output</th>
+              </tr>
+            </thead>
+            <tbody>
+              {problem.statement.sampleTests.map(({ input, output }, i) => (
+                <tr key={i}>
+                  <td><pre><code>{input}</code></pre></td>
+                  <td><pre><code>{output}</code></pre></td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        ) : null}
       </div>
     );
   }

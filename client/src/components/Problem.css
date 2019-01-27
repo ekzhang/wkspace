@@ -17,3 +17,10 @@
   text-align: center;
   margin-bottom: 20px;
 }
+
+.problem-area .sample-tests pre {
+  padding: 2px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.08);
+}

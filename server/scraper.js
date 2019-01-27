@@ -25,8 +25,8 @@ module.exports = {
       let sampleTests = [];
       const tests = statement.find('.sample-test').children();
       for (let i = 0; i < tests.length; i += 2) {
-        const input = tests.eq(i).find('pre').html().replace(/<br>/g, '\n');
-        const output = tests.eq(i + 1).find('pre').html().replace(/<br>/g, '\n');
+        const input = tests.eq(i).find('pre').html().replace(/<br>/g, '\n').replace(/&#xA0;/g, '\xa0');
+        const output = tests.eq(i + 1).find('pre').html().replace(/<br>/g, '\n').replace(/&#xA0;/g, '\xa0');
         sampleTests.push({ input, output });
       }
 
