@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button } from 'reactstrap';
+import { Form, Input, Button, Spinner } from 'reactstrap';
 import Split from 'react-split';
 import Problem from './Problem';
 import './App.css';
@@ -8,7 +8,7 @@ import Workspace from './Workspace';
 
 class App extends Component {
   // Initialize state
-  state = { problemId: '', problem: null }
+  state = { problemId: '', problem: null, loading: false }
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
 
@@ -18,9 +18,9 @@ class App extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    console.log('submitted: ' + this.state.problemId);
+    this.setState({ loading: true });
     const resp = await api.get('/problem', { params: { type: 'CF', id: this.state.problemId } });
-    this.setState({ problem: resp.data });
+    this.setState({ problem: resp.data, loading: false });
   }
 
   render() {
@@ -29,7 +29,7 @@ class App extends Component {
         <div className="problem-pane">
           <Form className="problem-select" onSubmit={this.handleSubmit}>
             <Input placeholder="Codeforces Problem ID" value={this.state.problemId} onChange={this.handleChange}></Input>
-            <Button style={{ marginLeft: '8px' }}>Parse</Button>
+            <Button style={{ marginLeft: '8px' }} disabled={this.state.loading}>{this.state.loading ? <Spinner size="sm" /> : 'Parse'}</Button>
           </Form>
           <Problem problem={this.state.problem} />
         </div>
