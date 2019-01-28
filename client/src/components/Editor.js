@@ -8,6 +8,7 @@ import 'brace/ext/searchbox';
 import './Editor.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareAlt, faDownload, faTools, faPlay, faCheck, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import Spacer from './Spacer';
 
 const defaultCode = `#include <bits/stdc++.h>
 using namespace std;
@@ -48,7 +49,8 @@ class Editor extends Component {
       <div className="editor-area">
         <div className="editor-menu">
           <button><FontAwesomeIcon icon={faUpload} /> Load</button>
-          <button style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faShareAlt} /> Share</button>
+          <Spacer />
+          <button><FontAwesomeIcon icon={faShareAlt} /> Share</button>
           <button><FontAwesomeIcon icon={faDownload} /> Download</button>
         </div>
 
@@ -75,7 +77,8 @@ class Editor extends Component {
 
         <div className="editor-menu">
           <button><FontAwesomeIcon icon={faTools} /> Compile</button>
-          <button style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlay} /> Run</button>
+          <Spacer />
+          <button><FontAwesomeIcon icon={faPlay} /> Run</button>
           <button><FontAwesomeIcon icon={faCheck} /> Test</button>
           <button><FontAwesomeIcon icon={faPaperPlane} /> Submit</button>
         </div>

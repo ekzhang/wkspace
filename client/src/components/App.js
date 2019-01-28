@@ -3,8 +3,9 @@ import { Form, Input, Button, Spinner } from 'reactstrap';
 import Split from 'react-split';
 import Problem from './Problem';
 import './App.css';
-import api from '../api';
 import Workspace from './Workspace';
+import Spacer from './Spacer';
+import { api } from '../api';
 
 class App extends Component {
   // Initialize state
@@ -28,8 +29,9 @@ class App extends Component {
       <Split direction="horizontal" sizes={[50, 50]} minSize={400} gutterSize={12} className="split-parent-horizontal">
         <div className="problem-pane">
           <Form className="problem-select" onSubmit={this.handleSubmit}>
-            <Input placeholder="Codeforces Problem ID" value={this.state.problemId} onChange={this.handleChange}></Input>
-            <Button style={{ marginLeft: '8px' }} disabled={this.state.loading}>{this.state.loading ? <Spinner size="sm" /> : 'Parse'}</Button>
+            <Input placeholder="Codeforces Problem ID" value={this.state.problemId} onChange={this.handleChange} />
+            <Spacer width={8} />
+            <Button disabled={this.state.loading}>{this.state.loading ? <Spinner size="sm" /> : 'Parse'}</Button>
           </Form>
           <Problem problem={this.state.problem} />
         </div>
