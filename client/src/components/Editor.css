@@ -1,0 +1,22 @@
+.editor-area {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-area .editor-menu {
+  display: flex;
+  flex-shrink: 0;
+  background: #34435b;
+}
+
+.editor-area .editor-menu button {
+  color: lightgrey;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.editor-area .ace-editor {
+  flex: 1;
+}

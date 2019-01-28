@@ -8,10 +8,6 @@ function textArray(ar) {
   return ar.map((paragraph, i) => <p key={i}>{paragraph}</p>);
 }
 
-// function codeElement(text) {
-//   return <code>{text.replace('\n', )}</code>
-// }
-
 class Problem extends Component {
   problemArea = React.createRef();
 

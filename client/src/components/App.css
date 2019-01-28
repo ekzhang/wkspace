@@ -3,14 +3,15 @@ h1 {
   font-size: 42px;
 }
 
-.split-parent {
+.split-parent-horizontal {
   display: flex;
   flex-direction: row;
   height: 100%;
+  overflow: hidden;
 }
 
 .gutter:hover {
-  background: rgba(0, 0, 0, 0.01);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .gutter.gutter-horizontal {
@@ -21,6 +22,8 @@ h1 {
 
 .gutter.gutter-vertical {
   cursor: ns-resize;
+  border: 1px solid lightgrey;
+  border-width: 1px 0px;
 }
 
 .problem-pane {
