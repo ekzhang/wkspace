@@ -45,7 +45,9 @@ class Editor extends Component {
     return (
       <div className="editor-area">
         <div className="editor-menu">
-          <button>test</button>
+          <button>Load</button>
+          <button style={{marginLeft: 'auto'}}>Share</button>
+          <button>Download</button>
         </div>
 
         <ReactResizeDetector handleWidth handleHeight>
@@ -70,7 +72,10 @@ class Editor extends Component {
         </ReactResizeDetector>
 
         <div className="editor-menu">
-          <button>bottom test</button>
+          <button>Compile</button>
+          <button style={{ marginLeft: 'auto' }}>Run</button>
+          <button>Test</button>
+          <button>Submit</button>
         </div>
       </div>
     );

@@ -12,9 +12,26 @@
 }
 
 .editor-area .editor-menu button {
+  height: 32px;
+  padding: 0 16px;
+  background: transparent;
+  border: none;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
   color: lightgrey;
   font-weight: bold;
   font-size: 14px;
+}
+
+.editor-area .editor-menu button:hover {
+  opacity: 0.9;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.editor-area .editor-menu button:active {
+  opacity: 0.8;
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .editor-area .ace-editor {
