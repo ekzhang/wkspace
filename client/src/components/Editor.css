@@ -34,6 +34,10 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
+.editor-area .editor-menu button > svg {
+  margin-right: 4px;
+}
+
 .editor-area .ace-editor {
   flex: 1;
 }

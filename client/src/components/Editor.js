@@ -6,6 +6,8 @@ import 'brace/theme/monokai';
 import 'brace/ext/language_tools';
 import 'brace/ext/searchbox';
 import './Editor.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload, faShareAlt, faDownload, faTools, faPlay, faCheck, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const defaultCode = `#include <bits/stdc++.h>
 using namespace std;
@@ -45,9 +47,9 @@ class Editor extends Component {
     return (
       <div className="editor-area">
         <div className="editor-menu">
-          <button>Load</button>
-          <button style={{marginLeft: 'auto'}}>Share</button>
-          <button>Download</button>
+          <button><FontAwesomeIcon icon={faUpload} /> Load</button>
+          <button style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faShareAlt} /> Share</button>
+          <button><FontAwesomeIcon icon={faDownload} /> Download</button>
         </div>
 
         <ReactResizeDetector handleWidth handleHeight>
@@ -72,10 +74,10 @@ class Editor extends Component {
         </ReactResizeDetector>
 
         <div className="editor-menu">
-          <button>Compile</button>
-          <button style={{ marginLeft: 'auto' }}>Run</button>
-          <button>Test</button>
-          <button>Submit</button>
+          <button><FontAwesomeIcon icon={faTools} /> Compile</button>
+          <button style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlay} /> Run</button>
+          <button><FontAwesomeIcon icon={faCheck} /> Test</button>
+          <button><FontAwesomeIcon icon={faPaperPlane} /> Submit</button>
         </div>
       </div>
     );
