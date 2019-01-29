@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import ReactResizeDetector from 'react-resize-detector';
-import AceEditor from 'react-ace';
-import 'brace/mode/c_cpp';
-import 'brace/theme/monokai';
-import 'brace/ext/language_tools';
-import 'brace/ext/searchbox';
-import './Editor.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareAlt, faDownload, faTools, faPlay, faCheck, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import Spacer from './Spacer';
+import Ace from './Ace';
 
 const defaultCode = `#include <bits/stdc++.h>
 using namespace std;
@@ -54,31 +48,16 @@ class Editor extends Component {
           <button><FontAwesomeIcon icon={faDownload} /> Download</button>
         </div>
 
-        <ReactResizeDetector handleWidth handleHeight>
-          {(width, height) => (
-            <AceEditor
-              mode="c_cpp"
-              theme="monokai"
-              height={height ? '100%' : '0'}
-              width={width ? '100%' : '0'}
-              value={this.state.code}
-              fontSize={14}
-              setOptions={{
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-                showPrintMargin: false,
-                scrollPastEnd: 1.0,
-              }}
-              editorProps={{ $blockScrolling: Infinity }}
-              onChange={this.handleChange}
-            />
-          )}
-        </ReactResizeDetector>
+        <Ace
+          mode="c_cpp"
+          value={this.state.code}
+          onChange={this.handleChange}
+        />
 
         <div className="editor-menu">
           <button><FontAwesomeIcon icon={faTools} /> Compile</button>
           <Spacer />
-          <button><FontAwesomeIcon icon={faPlay} /> Run</button>
+          <button onClick={this.props.onRun}><FontAwesomeIcon icon={faPlay} /> Run</button>
           <button><FontAwesomeIcon icon={faCheck} /> Test</button>
           <button><FontAwesomeIcon icon={faPaperPlane} /> Submit</button>
         </div>

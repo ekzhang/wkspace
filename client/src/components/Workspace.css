@@ -1,0 +1,40 @@
+.results-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.results-view .nav-tabs {
+  border: 0;
+  background: #34435b;
+  color: lightgrey;
+  font-weight: bold;
+  height: 28px;
+  line-height: 28px;
+  font-size: 14px;
+}
+
+.results-view .nav-link,
+.results-view .nav-link.active {
+  border: 0;
+  border-radius: 0;
+  padding: 0 14px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.results-view .nav-link:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.results-view .nav-link.active {
+  color: #fffcf9 !important;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.results-view .tab-content {
+  flex: 1;
+}
+
+.results-view .tab-pane {
+  height: 100%;
+}
