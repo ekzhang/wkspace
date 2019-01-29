@@ -18,6 +18,7 @@ function Ace({ mode = 'text', value, onChange }) {
           width={'calc(100% - 0 * ' + width + 'px)'}
           fontSize={14}
           wrapEnabled={true}
+          highlightActiveLine={false}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,
