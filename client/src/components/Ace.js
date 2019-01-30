@@ -14,8 +14,8 @@ function Ace({ mode = 'text', value, onChange }) {
         <AceEditor
           mode={mode}
           theme="monokai"
-          height={'calc(100% - 0 * ' + height + 'px)'} // Hack to call resize() properly
-          width={'calc(100% - 0 * ' + width + 'px)'}
+          height={`100%/*${height}*/`} // Hack to call resize() properly
+          width={`100%/*${width}*/`}
           fontSize={14}
           wrapEnabled={true}
           highlightActiveLine={false}
