@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareAlt, faDownload, faTools, faPlay, faCheck, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import Spacer from './Spacer';
 import Ace from './Ace';
+import FileUpload from './FileUpload';
 
 const defaultCode = `#include <bits/stdc++.h>
 using namespace std;
@@ -29,9 +30,11 @@ class Editor extends Component {
   handleChange = this.handleChange.bind(this);
 
   handleChange(code) {
-    this.setState({ code });
-    if (this.props.onChange)
-      this.props.onChange(code);
+    if (code !== null) {
+      this.setState({ code });
+      if (this.props.onChange)
+        this.props.onChange(code);
+    }
   }
 
   componentDidMount() {
@@ -42,7 +45,13 @@ class Editor extends Component {
     return (
       <div className="editor-area">
         <div className="editor-menu">
-          <button><FontAwesomeIcon icon={faUpload} /> Load</button>
+          <FileUpload>
+            {upload => (
+              <button onClick={async () => this.handleChange(await upload())}>
+                <FontAwesomeIcon icon={faUpload} /> Load
+              </button>
+            )}
+          </FileUpload>
           <Spacer />
           <button><FontAwesomeIcon icon={faShareAlt} /> Share</button>
           <button><FontAwesomeIcon icon={faDownload} /> Download</button>
