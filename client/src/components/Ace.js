@@ -7,7 +7,7 @@ import 'brace/ext/language_tools';
 import 'brace/ext/searchbox';
 import './Editor.css';
 
-function Ace({ mode = 'text', value, onChange }) {
+function Ace({ mode = 'text', readOnly, value, onChange }) {
   return (
     <ReactResizeDetector handleWidth handleHeight>
       {(width, height) => (
@@ -19,6 +19,7 @@ function Ace({ mode = 'text', value, onChange }) {
           fontSize={14}
           wrapEnabled={true}
           highlightActiveLine={false}
+          readOnly={readOnly}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,

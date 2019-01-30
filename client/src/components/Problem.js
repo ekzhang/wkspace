@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
+import Code from './Code';
 import './Problem.css';
 import 'katex/dist/katex.min.css';
 import renderMathInElement from 'katex/contrib/auto-render/auto-render';
@@ -62,8 +63,8 @@ class Problem extends Component {
             <tbody>
               {problem.statement.sampleTests.map(({ input, output }, i) => (
                 <tr key={i}>
-                  <td><pre><code>{input}</code></pre></td>
-                  <td><pre><code>{output}</code></pre></td>
+                  <td><Code value={input} /></td>
+                  <td><Code value={output} /></td>
                 </tr>
               ))}
             </tbody>
