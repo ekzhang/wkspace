@@ -4,6 +4,8 @@ import Code from './Code';
 import './Problem.css';
 import 'katex/dist/katex.min.css';
 import renderMathInElement from 'katex/contrib/auto-render/auto-render';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 function textArray(ar) {
   return ar.map((paragraph, i) => <p key={i}>{paragraph}</p>);
@@ -28,7 +30,9 @@ class Problem extends Component {
     return problem && (
       <div className="problem-area" ref={this.problemArea}>
         <div className="header">
-          <h2 className="title">{problem.title}</h2>
+          <h2 className="title">
+            {problem.title} <a href={problem.link} target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt} /></a>
+          </h2>
           <div className="time-limit">Time limit: {problem.timeLimit}</div>
           <div className="memory-limit">Memory limit: {problem.memoryLimit}</div>
         </div>

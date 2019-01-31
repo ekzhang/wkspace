@@ -18,6 +18,7 @@ class Workspace extends Component {
   };
   runCode = this.runCode.bind(this);
   runTests = this.runTests.bind(this);
+  handleSubmit = this.handleSubmit.bind(this);
   tabs = ['Input', 'Output', 'Stderr', 'Compilation', 'Execution', 'Tests'];
 
   async run(input, output) {
@@ -47,14 +48,15 @@ class Workspace extends Component {
   }
 
   async runTests() {
-    if (!this.props.testCases)
+    if (!this.props.problem)
       return alert('No test cases provided, please select a problem first.');
+    const testCases = this.props.problem.statement.sampleTests;
     this.setState({
-      testResults: new Array(this.props.testCases.length).fill(null),
+      testResults: new Array(testCases.length).fill(null),
       tab: 5,
       working: true
     });
-    await Promise.all(this.props.testCases.map(({ input, output }, index) =>
+    await Promise.all(testCases.map(({ input, output }, index) =>
       this.run(input, output).then(result => {
         result.input = input;
         this.setState((state) => {
@@ -65,6 +67,12 @@ class Workspace extends Component {
       })
     ));
     this.setState({ working: false });
+  }
+
+  handleSubmit() {
+    if (!this.props.problem)
+      return alert('Cannot submit, no problem selected.');
+    window.open(this.props.problem.submitLink, '_blank');
   }
 
   setTab(tab) {
@@ -78,6 +86,7 @@ class Workspace extends Component {
           onChange={code => this.setState({ code })}
           onRun={this.runCode}
           onTest={this.runTests}
+          onSubmit={this.handleSubmit}
           working={this.state.working}
         />
         <div className="results-view">

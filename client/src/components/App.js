@@ -35,7 +35,7 @@ class App extends Component {
           </Form>
           <Problem problem={this.state.problem} />
         </div>
-        <Workspace testCases={this.state.problem && this.state.problem.statement.sampleTests} />
+        <Workspace problem={this.state.problem} />
       </Split>
     );
   }

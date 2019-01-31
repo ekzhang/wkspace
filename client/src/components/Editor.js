@@ -76,7 +76,7 @@ class Editor extends Component {
           <button disabled={this.props.working} onClick={this.props.onTest}>
             <FontAwesomeIcon icon={faCheck} /> Test
           </button>
-          <button disabled={this.props.working}>
+          <button disabled={this.props.working} onClick={this.props.onSubmit}>
             <FontAwesomeIcon icon={faPaperPlane} /> Submit
           </button>
         </div>

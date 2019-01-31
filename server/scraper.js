@@ -42,7 +42,9 @@ module.exports = {
           outputSpec: statement.find('.output-specification > p').textArray(),
           sampleTests,
           notes: statement.find('.note > p').textArray(),
-        }
+        },
+        link: url,
+        submitLink: `https://codeforces.com/contest/${problem.contest}/submit`
       };
     }
     catch (err) {
