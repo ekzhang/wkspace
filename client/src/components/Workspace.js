@@ -8,7 +8,14 @@ import Ace from './Ace';
 import Code from './Code';
 
 class Workspace extends Component {
-  state = { code: null, input: '', result: null, testResults: null, tab: 0 }
+  state = {
+    code: null,
+    input: '',
+    result: null,
+    testResults: null,
+    working: false,
+    tab: 0
+  };
   runCode = this.runCode.bind(this);
   runTests = this.runTests.bind(this);
   tabs = ['Input', 'Output', 'Stderr', 'Compilation', 'Execution', 'Tests'];
@@ -25,6 +32,7 @@ class Workspace extends Component {
   }
 
   async runCode() {
+    this.setState({ working: true });
     const result = await this.run(this.state.input);
     let tab = 0;
     if (result.status.id <= 4) // accepted (or WA)
@@ -35,7 +43,7 @@ class Workspace extends Component {
       tab = 4;
     else // internal error
       alert('An internal error occurred. Please try again.');
-    this.setState({ result, tab });
+    this.setState({ result, tab, working: false });
   }
 
   async runTests() {
@@ -43,7 +51,8 @@ class Workspace extends Component {
       return alert('No test cases provided, please select a problem first.');
     this.setState({
       testResults: new Array(this.props.testCases.length).fill(null),
-      tab: 5
+      tab: 5,
+      working: true
     });
     await Promise.all(this.props.testCases.map(({ input, output }, index) =>
       this.run(input, output).then(result => {
@@ -55,6 +64,7 @@ class Workspace extends Component {
         });
       })
     ));
+    this.setState({ working: false });
   }
 
   setTab(tab) {
@@ -68,6 +78,7 @@ class Workspace extends Component {
           onChange={code => this.setState({ code })}
           onRun={this.runCode}
           onTest={this.runTests}
+          working={this.state.working}
         />
         <div className="results-view">
           <TabContent activeTab={this.state.tab}>

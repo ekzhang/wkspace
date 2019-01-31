@@ -24,12 +24,17 @@
   font-size: 14px;
 }
 
-.editor-area .editor-menu button:hover {
+.editor-area .editor-menu button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.editor-area .editor-menu button:not(:disabled):hover {
   opacity: 0.9;
   background: rgba(0, 0, 0, 0.15);
 }
 
-.editor-area .editor-menu button:active {
+.editor-area .editor-menu button:not(:disabled):active {
   opacity: 0.8;
   background: rgba(0, 0, 0, 0.3);
 }

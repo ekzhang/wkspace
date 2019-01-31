@@ -61,11 +61,11 @@ class Editor extends Component {
         />
 
         <div className="editor-menu">
-          <button><FontAwesomeIcon icon={faTools} /> Compile</button>
+          <button disabled={this.props.working}><FontAwesomeIcon icon={faTools} /> Compile</button>
           <Spacer />
-          <button onClick={this.props.onRun}><FontAwesomeIcon icon={faPlay} /> Run</button>
-          <button onClick={this.props.onTest}><FontAwesomeIcon icon={faCheck} /> Test</button>
-          <button><FontAwesomeIcon icon={faPaperPlane} /> Submit</button>
+          <button disabled={this.props.working} onClick={this.props.onRun}><FontAwesomeIcon icon={faPlay} /> Run</button>
+          <button disabled={this.props.working} onClick={this.props.onTest}><FontAwesomeIcon icon={faCheck} /> Test</button>
+          <button disabled={this.props.working}><FontAwesomeIcon icon={faPaperPlane} /> Submit</button>
         </div>
       </div>
     );
