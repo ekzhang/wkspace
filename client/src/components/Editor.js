@@ -67,7 +67,7 @@ class Editor extends Component {
           <button><FontAwesomeIcon icon={faTools} /> Compile</button>
           <Spacer />
           <button onClick={this.props.onRun}><FontAwesomeIcon icon={faPlay} /> Run</button>
-          <button><FontAwesomeIcon icon={faCheck} /> Test</button>
+          <button onClick={this.props.onTest}><FontAwesomeIcon icon={faCheck} /> Test</button>
           <button><FontAwesomeIcon icon={faPaperPlane} /> Submit</button>
         </div>
       </div>

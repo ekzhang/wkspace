@@ -33,8 +33,14 @@
 
 .results-view .tab-content {
   flex: 1;
+  overflow: auto;
 }
 
 .results-view .tab-pane {
   height: 100%;
+}
+
+.results-table td, .results-table th {
+  padding: .5rem;
+  vertical-align: middle;
 }
