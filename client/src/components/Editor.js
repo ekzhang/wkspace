@@ -4,6 +4,7 @@ import { faUpload, faShareAlt, faDownload, faTools, faPlay, faCheck, faPaperPlan
 import Spacer from './Spacer';
 import Ace from './Ace';
 import FileUpload from './FileUpload';
+import { download } from '../utils';
 
 const defaultCode = `#include <bits/stdc++.h>
 using namespace std;
@@ -50,8 +51,12 @@ class Editor extends Component {
             )}
           </FileUpload>
           <Spacer />
-          <button><FontAwesomeIcon icon={faShareAlt} /> Share</button>
-          <button><FontAwesomeIcon icon={faDownload} /> Download</button>
+          <button>
+            <FontAwesomeIcon icon={faShareAlt} /> Share
+          </button>
+          <button onClick={() => download('main.cpp', this.state.code)}>
+            <FontAwesomeIcon icon={faDownload} /> Download
+          </button>
         </div>
 
         <Ace
@@ -61,11 +66,19 @@ class Editor extends Component {
         />
 
         <div className="editor-menu">
-          <button disabled={this.props.working}><FontAwesomeIcon icon={faTools} /> Compile</button>
+          <button>
+            <FontAwesomeIcon icon={faTools} /> Settings
+          </button>
           <Spacer />
-          <button disabled={this.props.working} onClick={this.props.onRun}><FontAwesomeIcon icon={faPlay} /> Run</button>
-          <button disabled={this.props.working} onClick={this.props.onTest}><FontAwesomeIcon icon={faCheck} /> Test</button>
-          <button disabled={this.props.working}><FontAwesomeIcon icon={faPaperPlane} /> Submit</button>
+          <button disabled={this.props.working} onClick={this.props.onRun}>
+            <FontAwesomeIcon icon={faPlay} /> Run
+          </button>
+          <button disabled={this.props.working} onClick={this.props.onTest}>
+            <FontAwesomeIcon icon={faCheck} /> Test
+          </button>
+          <button disabled={this.props.working}>
+            <FontAwesomeIcon icon={faPaperPlane} /> Submit
+          </button>
         </div>
       </div>
     );
