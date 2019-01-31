@@ -51,7 +51,7 @@ class Editor extends Component {
             )}
           </FileUpload>
           <Spacer />
-          <button>
+          <button onClick={() => alert('Not implemented')}>
             <FontAwesomeIcon icon={faShareAlt} /> Share
           </button>
           <button onClick={() => download('main.cpp', this.state.code)}>
@@ -66,7 +66,7 @@ class Editor extends Component {
         />
 
         <div className="editor-menu">
-          <button>
+          <button onClick={() => alert('Not implemented')}>
             <FontAwesomeIcon icon={faTools} /> Settings
           </button>
           <Spacer />
