@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 import Code from './Code';
 import './Problem.css';
 import 'katex/dist/katex.min.css';
-import renderMathInElement from 'katex/dist/contrib/auto-render';
+import renderMathInElement from 'katex/contrib/auto-render/auto-render';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
