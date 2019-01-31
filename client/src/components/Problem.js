@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 import Code from './Code';
 import './Problem.css';
 import 'katex/dist/katex.min.css';
-import renderMathInElement from 'katex/contrib/auto-render/auto-render';
+import renderMathInElement from 'katex/dist/contrib/auto-render';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,11 +12,11 @@ function textArray(ar) {
 }
 
 class Problem extends Component {
-  problemArea = React.createRef();
+  problemStatement = React.createRef();
 
   componentDidUpdate() {
-    if (this.problemArea.current) {
-      renderMathInElement(this.problemArea.current, {
+    if (this.problemStatement.current) {
+      renderMathInElement(this.problemStatement.current, {
         delimiters: [
           { left: "$$$$$$", right: "$$$$$$", display: true },
           { left: "$$$", right: "$$$", display: false }
@@ -28,7 +28,7 @@ class Problem extends Component {
   render() {
     const { problem } = this.props;
     return problem && (
-      <div className="problem-area" ref={this.problemArea}>
+      <div className="problem-area">
         <div className="header">
           <h2 className="title">
             {problem.title} <a href={problem.link} target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt} /></a>
@@ -36,16 +36,16 @@ class Problem extends Component {
           <div className="time-limit">Time limit: {problem.timeLimit}</div>
           <div className="memory-limit">Memory limit: {problem.memoryLimit}</div>
         </div>
-        <div className="statement">
+        <div className="statement" ref={this.problemStatement}>
           {textArray(problem.statement.text)}
 
           <div className="input-spec">
-            <h3 className="section-title">Input ({problem.input})</h3>
+            <h3 className="section-title">Input (<span>{problem.input}</span>)</h3>
             {textArray(problem.statement.inputSpec)}
           </div>
 
           <div className="output-spec">
-            <h3 className="section-title">Output ({problem.output})</h3>
+            <h3 className="section-title">Output (<span>{problem.output}</span>)</h3>
             {textArray(problem.statement.outputSpec)}
           </div>
 
