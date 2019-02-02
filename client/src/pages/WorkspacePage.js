@@ -36,9 +36,9 @@ class WorkspacePage extends Component {
       <Split direction="horizontal" sizes={[50, 50]} minSize={400} gutterSize={12} className="split-parent-horizontal">
         <div className="problem-pane">
           <Form className="problem-select" onSubmit={this.handleSubmit}>
-            <Input autoFocus placeholder="Codeforces Problem ID" value={this.state.problemId} onChange={this.handleChange} />
-            <Spacer width={8} />
-            <Button disabled={this.state.loading}>{this.state.loading ? <Spinner size="sm" /> : 'Parse'}</Button>
+            <Input size="sm" autoFocus placeholder="Codeforces Problem ID" value={this.state.problemId} onChange={this.handleChange} />
+            <Spacer width={6} />
+            <Button size="sm" disabled={this.state.loading}>{this.state.loading ? <Spinner size="sm" /> : 'Parse'}</Button>
           </Form>
           <Problem problem={this.state.problem} />
         </div>

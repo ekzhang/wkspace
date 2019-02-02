@@ -6,6 +6,6 @@
 .problem-select {
   display: flex;
   flex-shrink: 0;
-  padding: 16px;
+  padding: 12px;
   border-bottom: 1px solid lightgray;
 }
