@@ -1,0 +1,11 @@
+.problem-pane {
+  display: flex;
+  flex-direction: column;
+}
+
+.problem-select {
+  display: flex;
+  flex-shrink: 0;
+  padding: 16px;
+  border-bottom: 1px solid lightgray;
+}

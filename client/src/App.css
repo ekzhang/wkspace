@@ -22,3 +22,25 @@ code {
     monospace;
   color: black;
 }
+
+.split-parent-horizontal {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.gutter:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.gutter.gutter-horizontal {
+  cursor: ew-resize;
+  border: 1px solid lightgrey;
+  border-width: 0px 1px;
+}
+
+.gutter.gutter-vertical {
+  cursor: ns-resize;
+  border: 1px solid lightgrey;
+  border-width: 1px 0px;
+}

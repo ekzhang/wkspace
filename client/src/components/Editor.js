@@ -4,7 +4,7 @@ import { faUpload, faShareAlt, faDownload, faTools, faPlay, faCheck, faPaperPlan
 import Spacer from './Spacer';
 import Ace from './Ace';
 import FileUpload from './FileUpload';
-import { download } from '../utils';
+import { download } from '../js/utils';
 
 const defaultCode = `#include <bits/stdc++.h>
 using namespace std;

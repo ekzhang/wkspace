@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Split from 'react-split';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Table, Button } from 'reactstrap';
 import Editor from './Editor';
-import { judge } from '../api';
+import { judge } from '../js/api';
 import './Workspace.css';
 import Ace from './Ace';
 import Code from './Code';
@@ -34,17 +34,25 @@ class Workspace extends Component {
 
   async runCode() {
     this.setState({ working: true });
-    const result = await this.run(this.state.input);
-    let tab = 0;
-    if (result.status.id <= 4) // accepted (or WA)
-      tab = 1;
-    else if (result.status.id === 6) // compilation error
-      tab = 3;
-    else if (result.status.id <= 12) // runtime error or TLE
-      tab = 4;
-    else // internal error
-      alert('An internal error occurred. Please try again.');
-    this.setState({ result, tab, working: false });
+    try {
+      const result = await this.run(this.state.input);
+      let tab = 0;
+      if (result.status.id <= 4) // accepted (or WA)
+        tab = 1;
+      else if (result.status.id === 6) // compilation error
+        tab = 3;
+      else if (result.status.id <= 12) // runtime error or TLE
+        tab = 4;
+      else // internal error
+        alert('An internal error occurred. Please try again.');
+      this.setState({ result, tab });
+    }
+    catch (e) {
+      alert('Error: ' + e);
+    }
+    finally {
+      this.setState({ working: false });
+    }
   }
 
   async runTests() {

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Spinner } from 'reactstrap';
 import Split from 'react-split';
-import Problem from './Problem';
-import './App.css';
-import Workspace from './Workspace';
-import Spacer from './Spacer';
-import { api } from '../api';
+import Problem from '../components/Problem';
+import './WorkspacePage.css';
+import Workspace from '../components/Workspace';
+import Spacer from '../components/Spacer';
+import { api } from '../js/api';
 
-class App extends Component {
-  // Initialize state
-  state = { problemId: '', problem: null, loading: false }
+class WorkspacePage extends Component {
+  state = { problemId: '', problem: null, loading: false };
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
 
@@ -20,8 +19,16 @@ class App extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     this.setState({ loading: true });
-    const resp = await api.get('/problem', { params: { type: 'CF', id: this.state.problemId } });
-    this.setState({ problem: resp.data, loading: false });
+    try {
+      const resp = await api.get('/problem', { params: { type: 'CF', id: this.state.problemId } });
+      this.setState({ problem: resp.data });
+    }
+    catch (e) {
+      alert('Error: ' + e);
+    }
+    finally {
+      this.setState({ loading: false });
+    }
   }
 
   render() {
@@ -41,4 +48,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default WorkspacePage;
