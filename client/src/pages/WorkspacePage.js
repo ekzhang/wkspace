@@ -24,7 +24,7 @@ class WorkspacePage extends Component {
       this.setState({ problem: resp.data });
     }
     catch (e) {
-      alert('Error: ' + e);
+      alert(e);
     }
     finally {
       this.setState({ loading: false });

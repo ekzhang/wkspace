@@ -48,7 +48,7 @@ class Workspace extends Component {
       this.setState({ result, tab });
     }
     catch (e) {
-      alert('Error: ' + e);
+      alert(e);
     }
     finally {
       this.setState({ working: false });
