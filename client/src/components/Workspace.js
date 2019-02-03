@@ -9,7 +9,6 @@ import Code from './Code';
 
 class Workspace extends Component {
   state = {
-    code: null,
     input: '',
     result: null,
     testResults: null,
@@ -23,7 +22,7 @@ class Workspace extends Component {
 
   async run(input, output) {
     const resp = await judge.post('/submissions', {
-      source_code: this.state.code,
+      source_code: this.props.solution.code,
       language_id: 10,
       stdin: input || null,
       expected_output: output || null
@@ -95,7 +94,8 @@ class Workspace extends Component {
     return (
       <Split direction="vertical" sizes={[70, 30]} minSize={[100, 0]} gutterSize={4}>
         <Editor
-          onChange={code => this.setState({ code })}
+          value={this.props.solution}
+          onChange={this.props.onChange}
           onRun={this.runCode}
           onTest={this.runTests}
           onSubmit={this.handleSubmit}

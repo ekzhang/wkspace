@@ -6,22 +6,77 @@ import './WorkspacePage.css';
 import Workspace from '../components/Workspace';
 import Spacer from '../components/Spacer';
 import { api } from '../js/api';
+import debounce from 'lodash/debounce';
+
+const defaultCode = `#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long LL;
+const double PI = 4 * atan(1);
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+
+    // your code here
+
+    cout.flush();
+    return 0;
+}
+`;
 
 class WorkspacePage extends Component {
-  state = { problemId: '', problem: null, loading: false };
+  state = {
+    problemId: '',
+    loading: false,
+    problem: null,
+    solution: { code: defaultCode, language: 10 },
+  };
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
+  handleWorkspaceChange = this.handleWorkspaceChange.bind(this);
+  workspaceSave = debounce(this.workspaceSave.bind(this), 1000);
+
+  loadState(data) {
+    if (data.solution == null)
+      data.solution = { language: 10, code: defaultCode };
+    this.setState({
+      problem: data.problem,
+      solution: data.solution
+    });
+  }
+
+  async componentDidMount() {
+    const { id } = this.props.match.params;
+    if (id) {
+      const { data } = await api.get(`/workspace/${id}`);
+      this.loadState(data);
+    }
+  }
 
   handleChange(event) {
     this.setState({ problemId: event.target.value });
+  }
+
+  handleWorkspaceChange(value) {
+    this.setState(state => ({
+      solution: { ...state.solution, ...value }
+    }));
+    this.workspaceSave();
+  }
+
+  workspaceSave() {
+    if (this.props.match.params.id)
+      api.put(`/workspace/${this.props.match.params.id}/save`, this.state.solution);
   }
 
   async handleSubmit(event) {
     event.preventDefault();
     this.setState({ loading: true });
     try {
-      const resp = await api.get('/problem', { params: { type: 'CF', id: this.state.problemId } });
-      this.setState({ problem: resp.data });
+      const { data } = await api.post('/workspace', { type: 'CF', id: this.state.problemId });
+      this.props.history.push(`/workspace/${data._id}`);
+      this.loadState(data);
     }
     catch (e) {
       alert(e);
@@ -36,13 +91,16 @@ class WorkspacePage extends Component {
       <Split direction="horizontal" sizes={[50, 50]} minSize={400} gutterSize={12} className="split-parent-horizontal">
         <div className="problem-pane">
           <Form className="problem-select" onSubmit={this.handleSubmit}>
-            <Input size="sm" autoFocus placeholder="Codeforces Problem ID" value={this.state.problemId} onChange={this.handleChange} />
+            <Input bsSize="sm" autoFocus placeholder="Codeforces Problem ID" value={this.state.problemId} onChange={this.handleChange} />
             <Spacer width={6} />
             <Button size="sm" disabled={this.state.loading}>{this.state.loading ? <Spinner size="sm" /> : 'Parse'}</Button>
           </Form>
           <Problem problem={this.state.problem} />
         </div>
-        <Workspace problem={this.state.problem} />
+        <Workspace
+          problem={this.state.problem}
+          solution={this.state.solution}
+          onChange={this.handleWorkspaceChange} />
       </Split>
     );
   }

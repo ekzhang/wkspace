@@ -38,13 +38,7 @@ router.post('/workspace', async (req, res) => {
     res.status(400).send(e)
   }
 
-  const obj = new Workspace({
-    problem,
-    solution: {
-      language: 4,
-      code: '// your code here'
-    }
-  });
+  const obj = new Workspace({ problem });
   await obj.save();
   return res.json(obj);
 });

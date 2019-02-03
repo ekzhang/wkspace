@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, NavLink as RRNavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, Link, NavLink as RRNavLink } from 'react-router-dom';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import WorkspacePage from './pages/WorkspacePage';
 import IndexPage from './pages/IndexPage';
@@ -20,8 +20,12 @@ class App extends Component {
             </Nav>
           </Navbar>
           <div style={{ height: `calc(100% - ${navbarHeight})`, overflow: 'none' }}>
-            <Route path="/" exact component={IndexPage} />
-            <Route path="/workspace" component={WorkspacePage} />
+            <Switch>
+              <Route path="/workspace/:id" component={WorkspacePage} />
+              <Route path="/workspace" component={WorkspacePage} />
+              <Route path="/" exact component={IndexPage} />
+              <Redirect to="/" />
+            </Switch>
           </div>
         </>
       </Router>
