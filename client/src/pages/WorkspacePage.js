@@ -6,31 +6,24 @@ import './WorkspacePage.css';
 import Workspace from '../components/Workspace';
 import Spacer from '../components/Spacer';
 import { api } from '../js/api';
+import languages from '../js/languages';
 import debounce from 'lodash/debounce';
 
-const defaultCode = `#include <bits/stdc++.h>
-using namespace std;
+const defaultLanguage = 10;
 
-typedef long long LL;
-const double PI = 4 * atan(1);
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-
-    // your code here
-
-    cout.flush();
-    return 0;
+function defaultSolution(language = defaultLanguage) {
+  return {
+    language,
+    code: languages[language].template
+  };
 }
-`;
 
 class WorkspacePage extends Component {
   state = {
     problemId: '',
     loading: false,
     problem: null,
-    solution: { code: defaultCode, language: 10 },
+    solution: defaultSolution()
   };
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
@@ -39,7 +32,7 @@ class WorkspacePage extends Component {
 
   loadState(data) {
     if (data.solution == null)
-      data.solution = { language: 10, code: defaultCode };
+      data.solution = defaultSolution();
     this.setState({
       problem: data.problem,
       solution: data.solution

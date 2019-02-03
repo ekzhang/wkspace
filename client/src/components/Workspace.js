@@ -23,7 +23,7 @@ class Workspace extends Component {
   async run(input, output) {
     const resp = await judge.post('/submissions', {
       source_code: this.props.solution.code,
-      language_id: 10,
+      language_id: this.props.solution.language,
       stdin: input || null,
       expected_output: output || null
     });
