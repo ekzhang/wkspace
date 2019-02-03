@@ -22,14 +22,18 @@ class Workspace extends Component {
   tabs = ['Input', 'Output', 'Stderr', 'Compilation', 'Execution', 'Tests'];
 
   async run(input, output) {
-    const resp = await judge.post('/submissions?wait=true', {
+    const resp = await judge.post('/submissions', {
       source_code: this.state.code,
       language_id: 10,
       stdin: input || null,
       expected_output: output || null
     });
-    console.log(resp);
-    return resp.data;
+    const { token } = resp.data;
+    while (true) {
+      const { data } = await judge.get('/submissions/' + token);
+      if (data.status.id > 2) // not queued or processing
+        return data;
+    }
   }
 
   async runCode() {
