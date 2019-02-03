@@ -12,46 +12,81 @@ cheerio.prototype.textArray = function() {
   }).toArray();
 }
 
-module.exports = {
-  getCodeforcesProblem: async function (problem) {
-    try {
-      const url = `https://codeforces.com/contest/${problem.contest}/problem/${problem.problem}`;
-      const response = await axios.get(url);
-      assert.equal(response.status, 200);
-      const $ = cheerio.load(response.data);
-      const statement = $('.problem-statement');
-      const header = statement.find('.header');
 
-      let sampleTests = [];
-      const tests = statement.find('.sample-test').children();
-      for (let i = 0; i < tests.length; i += 2) {
-        const input = tests.eq(i).find('pre').html().replace(/<br>/g, '\n').replace(/&#xA0;/g, '\xa0');
-        const output = tests.eq(i + 1).find('pre').html().replace(/<br>/g, '\n').replace(/&#xA0;/g, '\xa0');
-        sampleTests.push({ input, output });
-      }
+async function getCodeforcesProblem ({ contest, problem }) {
+  try {
+    const url = `https://codeforces.com/contest/${contest}/problem/${problem}`;
+    const response = await axios.get(url, { maxRedirects: 0 });
+    assert.strictEqual(response.status, 200);
+    const $ = cheerio.load(response.data);
+    const statement = $('.problem-statement');
+    const header = statement.find('.header');
 
-      return {
-        title: header.find('.title').text(),
-        timeLimit: header.find('.time-limit').justtext(),
-        memoryLimit: header.find('.memory-limit').justtext(),
-        input: header.find('.input-file').justtext(),
-        output: header.find('.output-file').justtext(),
-        statement: {
-          text: statement.children().eq(1).children().textArray(),
-          inputSpec: statement.find('.input-specification > p').textArray(),
-          outputSpec: statement.find('.output-specification > p').textArray(),
-          sampleTests,
-          notes: statement.find('.note > p').textArray(),
-        },
-        link: url,
-        submitLink: `https://codeforces.com/contest/${problem.contest}/submit`
-      };
+    let sampleTests = [];
+    const tests = statement.find('.sample-test').children();
+    for (let i = 0; i < tests.length; i += 2) {
+      const input = tests.eq(i).find('pre').html().replace(/<br>/g, '\n').replace(/&#xA0;/g, '\xa0');
+      const output = tests.eq(i + 1).find('pre').html().replace(/<br>/g, '\n').replace(/&#xA0;/g, '\xa0');
+      sampleTests.push({ input, output });
     }
-    catch (err) {
-      return {
-        status: "error",
-        message: "Could not get or parse problem"
-      };
-    }
+
+    return {
+      title: header.find('.title').text(),
+      timeLimit: header.find('.time-limit').justtext(),
+      memoryLimit: header.find('.memory-limit').justtext(),
+      input: header.find('.input-file').justtext(),
+      output: header.find('.output-file').justtext(),
+      statement: {
+        text: statement.children().eq(1).children().textArray(),
+        inputSpec: statement.find('.input-specification > p').textArray(),
+        outputSpec: statement.find('.output-specification > p').textArray(),
+        sampleTests,
+        notes: statement.find('.note > p').textArray(),
+      },
+      link: url,
+      submitLink: `https://codeforces.com/contest/${contest}/submit`
+    };
+  }
+  catch (err) {
+    throw 'Could not find or parse problem';
   }
 }
+
+function getHackerrankProblem ({ contest, problem }) {
+  try {
+    const url = (contest
+      ? `https://www.hackerrank.com/contests/${contest}/challenges/${problem}`
+      : `https://www.hackerrank.com/challenges/${problem}/problem`);
+    throw 'Not implemented';
+  }
+  catch (err) {
+    throw 'Could not find or parse problem';
+  }
+}
+
+function scraper (type, pid) {
+  if (type === 'CF') {
+    // Codeforces
+    const match = pid.match(/([0-9]+)([A-Z][A-Z0-9]*)$/);
+    if (!match)
+      throw 'Invalid Codeforces problem ID';
+    const contest = match[1];
+    const problem = match[2];
+    return getCodeforcesProblem({ contest, problem });
+  }
+  else if (type === 'HR') {
+    let contest = null;
+    let problem = pid;
+    const idx = pid.indexOf('/');
+    if (idx !== -1) {
+      contest = pid.substring(0, idx);
+      problem = pid.substring(idx + 1);
+    }
+    return getHackerrankProblem({ contest, problem });
+  }
+  else {
+    throw 'Invalid problem type';
+  }
+}
+
+module.exports = scraper;
