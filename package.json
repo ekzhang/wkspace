@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "mongo": "mkdir .mongodb; mongod --dbpath .mongodb",
-    "dev": "concurrently \"nodemon index.js\" \"cd client && npm start\"",
+    "dev": "concurrently \"npm run mongo\" \"nodemon index.js\" \"cd client && npm start\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
@@ -19,7 +19,7 @@
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.4",
-    "mongodb": "^3.1.13"
+    "mongoose": "^5.4.9"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",

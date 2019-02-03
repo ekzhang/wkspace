@@ -26,11 +26,11 @@ app.set('port', port);
 
 // Database
 const database = require('./server/database');
-// database.connect((err) => {
-//   if (err)
-//     console.error("Error connecting to MongoDB: " + err);
-//   else {
+database.connect((err) => {
+  if (err)
+    console.error("Error connecting to MongoDB: " + err);
+  else {
     const server = http.createServer(app);
     server.listen(port, () => console.log(`API running on localhost:${port}`));
-//   }
-// });
+  }
+});

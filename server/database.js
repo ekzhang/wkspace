@@ -1,18 +1,22 @@
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 
-const DATABASE_URI = (process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost:27017/workspace-db');
+const DATABASE_URI = (
+  process.env.NODE_ENV === 'production'
+  ? process.env.MONGODB_URI
+  : 'mongodb://localhost:27017/workspace-db');
 
-var _db;
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 module.exports = {
-  connect: function (callback) {
-    MongoClient.connect(DATABASE_URI, { useNewUrlParser: true }, function(err, db) {
-      _db = db;
-      return callback(err);
+  connect: function (cb) {
+    mongoose.connect(DATABASE_URI);
+    const db = mongoose.connection;
+    db.on('error', cb);
+    db.once('open', () => {
+      console.log('Connected to MongoDB.');
+      cb();
     });
-  },
-
-  get: function() {
-    return _db;
   }
 }
