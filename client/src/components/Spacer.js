@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Spacer({ width }) {
-  return <div style={{ marginLeft: (width || 'auto') }}></div>;
+  return <span style={{ marginLeft: (width || 'auto') }}></span>;
 }
 
 export default Spacer;

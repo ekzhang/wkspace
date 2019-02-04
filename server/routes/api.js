@@ -30,21 +30,23 @@ router.post('/workspace', async (req, res) => {
   if (!type || !pid)
     return res.status(400).send('Missing `type` or `id` parameter');
 
-  let problem;
   try {
-    problem = await scraper(type, pid);
+    const problem = await scraper(type, pid);
+    const obj = new Workspace({ problem });
+    await obj.save();
+    return res.json(obj);
   }
   catch (e) {
     res.status(400).send(e)
   }
-
-  const obj = new Workspace({ problem });
-  await obj.save();
-  return res.json(obj);
 });
 
 router.get('/workspace/:id', async (req, res) => {
   return res.json(await Workspace.findById(req.params.id));
+});
+
+router.delete('/workspace/:id', async (req, res) => {
+  return res.json(await Workspace.findByIdAndDelete(req.params.id));
 });
 
 router.put('/workspace/:id/save', async (req, res) => {
