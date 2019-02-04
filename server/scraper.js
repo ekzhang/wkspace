@@ -44,7 +44,7 @@ async function getCodeforcesProblem ({ contest, problem }) {
         notes: statement.find('.note > p').textArray(),
       },
       link: url,
-      submitLink: `https://codeforces.com/contest/${contest}/submit`
+      submitLink: `https://codeforces.com/contest/${contest}/submit/${problem}`
     };
   }
   catch (err) {
