@@ -7,6 +7,7 @@ import Ace from './Ace';
 import FileUpload from './FileUpload';
 import { download } from '../js/utils';
 import languages from '../js/languages';
+import AceContext from '../context/AceContext';
 
 class Editor extends Component {
   state = { settingsOpen: false };
@@ -55,23 +56,60 @@ class Editor extends Component {
             <DropdownToggle>
               <FontAwesomeIcon icon={faTools} /> Settings
             </DropdownToggle>
-            <DropdownMenu className="p-3">
-              <Form className="form-inline" style={{ width: 200 }}>
-                <FormGroup>
-                  <Label for="language-select">Language:</Label>
-                  <Spacer width={6} />
-                  <Input
-                    bsSize="sm"
-                    type="select"
-                    id="language-select"
-                    value={this.props.value.language}
-                    onChange={this.handleLanguage}>
-                    {Object.entries(languages).map(([id, { name }]) =>
-                      <option key={id} value={id}>{name}</option>
-                    )}
-                  </Input>
-                </FormGroup>
-              </Form>
+            <DropdownMenu className="p-4">
+              <AceContext.Consumer>
+                {aceProps =>
+                  <Form style={{ width: 300 }}>
+                    <FormGroup className="form-row">
+                      <Label className="col-4 font-weight-bold" for="language-select">Language</Label>
+                      <Spacer width={6} />
+                      <Input
+                        className="col"
+                        bsSize="sm"
+                        type="select"
+                        id="language-select"
+                        value={this.props.value.language}
+                        onChange={this.handleLanguage}>
+                        {Object.entries(languages).map(([id, { name }]) =>
+                          <option key={id} value={id}>{name}</option>
+                        )}
+                      </Input>
+                    </FormGroup>
+                    <FormGroup className="form-row">
+                      <Label className="col-4 font-weight-bold" for="theme-select">Theme</Label>
+                      <Spacer width={6} />
+                      <Input
+                        className="col"
+                        bsSize="sm"
+                        type="select"
+                        id="theme-select"
+                        value={aceProps.theme}
+                        onChange={event => this.props.onAceChange({ theme: event.target.value })}>
+                        <option value="monokai">Monokai</option>
+                        <option value="dawn">Dawn</option>
+                        <option value="textmate">Textmate</option>
+                        <option value="solarized_light">Solarized Light</option>
+                        <option value="solarized_dark">Solarized Dark</option>
+                      </Input>
+                    </FormGroup>
+                    <FormGroup className="form-row">
+                      <Label className="col-4 font-weight-bold" for="keybinding-select">Keybinding</Label>
+                      <Spacer width={6} />
+                      <Input
+                        className="col"
+                        bsSize="sm"
+                        type="select"
+                        id="keybinding-select"
+                        value={aceProps.keyboardHandler}
+                        onChange={event => this.props.onAceChange({ keyboardHandler: event.target.value })}>
+                        <option value="">Default</option>
+                        <option value="vim">Vim</option>
+                        <option value="emacs">Emacs</option>
+                      </Input>
+                    </FormGroup>
+                  </Form>
+                }
+              </AceContext.Consumer>
             </DropdownMenu>
           </ButtonDropdown>
           <Spacer />

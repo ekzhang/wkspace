@@ -6,6 +6,7 @@ import { judge } from '../js/api';
 import './Workspace.css';
 import Ace from './Ace';
 import Code from './Code';
+import AceContext from '../context/AceContext';
 
 class Workspace extends Component {
   state = {
@@ -13,11 +14,16 @@ class Workspace extends Component {
     result: null,
     testResults: null,
     working: false,
-    tab: 0
+    tab: 0,
+    aceProps: {
+      theme: 'dawn',
+      keyboardHandler: ''
+    }
   };
   runCode = this.runCode.bind(this);
   runTests = this.runTests.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
+  handleAceChange = this.handleAceChange.bind(this);
   tabs = ['Input', 'Output', 'Stderr', 'Compilation', 'Execution', 'Tests'];
 
   async run(input, output) {
@@ -86,95 +92,104 @@ class Workspace extends Component {
     window.open(this.props.problem.submitLink, '_blank');
   }
 
+  handleAceChange(aceProps) {
+    this.setState(state => ({
+      aceProps: { ...state.aceProps, ...aceProps }
+    }));
+  }
+
   setTab(tab) {
     this.setState({ tab });
   }
 
   render() {
     return (
-      <Split direction="vertical" sizes={[70, 30]} minSize={[100, 0]} gutterSize={4}>
-        <Editor
-          value={this.props.solution}
-          onChange={this.props.onChange}
-          onRun={this.runCode}
-          onTest={this.runTests}
-          onSubmit={this.handleSubmit}
-          working={this.state.working}
-        />
-        <div className="results-view">
-          <TabContent activeTab={this.state.tab}>
-            <TabPane tabId={0}>
-              <Ace value={this.state.input} onChange={input => this.setState({ input })} />
-            </TabPane>
-            <TabPane tabId={1}>
-              <Ace value={(this.state.result && this.state.result.stdout) || ''} readOnly={true} />
-            </TabPane>
-            <TabPane tabId={2}>
-              <Ace value={(this.state.result && this.state.result.stderr) || ''} readOnly={true} />
-            </TabPane>
-            <TabPane tabId={3}>
-              {this.state.result && (
-                <div className="p-2">
-                  {this.state.result.status.id !== 6 ? (
-                    <b>Compilation successful.</b>
-                  ) : (
-                    <>
-                      <b>Compilation error:</b>
-                      <Code value={this.state.result.compile_output} />
-                    </>
-                  )}
-                </div>
-              )}
-            </TabPane>
-            <TabPane tabId={4}>
-              {this.state.result && (
-                <div className="p-2">
-                  <p><b>Time:</b> {this.state.result.time == null ? '-' : Math.floor(this.state.result.time * 1000) + ' ms'}</p>
-                  <p><b>Memory:</b> {this.state.result.memory == null ? '-' : this.state.result.memory + ' KB'}</p>
-                  <p><b>Verdict:</b> {this.state.result.status.description}</p>
-                </div>
-              )}
-            </TabPane>
-            <TabPane tabId={5}>
-              {this.state.testResults && (
-                <Table className="results-table" hover={true}>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Verdict</th>
-                      <th>Time</th>
-                      <th>Memory</th>
-                      <th>Data</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.testResults.map((result, i) => result && (
-                      <tr key={i}>
-                        <td>{i}</td>
-                        <td>{result.status.description}</td>
-                        <td>{result.time == null ? '-' : Math.floor(result.time * 1000) + ' ms'}</td>
-                        <td>{result.memory == null ? '-' : result.memory + ' KB'}</td>
-                        <td><Button size="sm" onClick={() => this.setState({ tab: 0, input: result.input })}>Load</Button></td>
+      <AceContext.Provider value={this.state.aceProps}>
+        <Split direction="vertical" sizes={[70, 30]} minSize={[100, 0]} gutterSize={4}>
+          <Editor
+            value={this.props.solution}
+            onChange={this.props.onChange}
+            onRun={this.runCode}
+            onTest={this.runTests}
+            onSubmit={this.handleSubmit}
+            onAceChange={this.handleAceChange}
+            working={this.state.working}
+          />
+          <div className="results-view">
+            <TabContent activeTab={this.state.tab}>
+              <TabPane tabId={0}>
+                <Ace value={this.state.input} onChange={input => this.setState({ input })} />
+              </TabPane>
+              <TabPane tabId={1}>
+                <Ace value={(this.state.result && this.state.result.stdout) || ''} readOnly={true} />
+              </TabPane>
+              <TabPane tabId={2}>
+                <Ace value={(this.state.result && this.state.result.stderr) || ''} readOnly={true} />
+              </TabPane>
+              <TabPane tabId={3}>
+                {this.state.result && (
+                  <div className="p-2">
+                    {this.state.result.status.id !== 6 ? (
+                      <b>Compilation successful.</b>
+                    ) : (
+                      <>
+                        <b>Compilation error:</b>
+                        <Code value={this.state.result.compile_output} />
+                      </>
+                    )}
+                  </div>
+                )}
+              </TabPane>
+              <TabPane tabId={4}>
+                {this.state.result && (
+                  <div className="p-2">
+                    <p><b>Time:</b> {this.state.result.time == null ? '-' : Math.floor(this.state.result.time * 1000) + ' ms'}</p>
+                    <p><b>Memory:</b> {this.state.result.memory == null ? '-' : this.state.result.memory + ' KB'}</p>
+                    <p><b>Verdict:</b> {this.state.result.status.description}</p>
+                  </div>
+                )}
+              </TabPane>
+              <TabPane tabId={5}>
+                {this.state.testResults && (
+                  <Table className="results-table" hover={true}>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Verdict</th>
+                        <th>Time</th>
+                        <th>Memory</th>
+                        <th>Data</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              )}
-            </TabPane>
-          </TabContent>
-          <Nav tabs>
-            {this.tabs.map((tabName, i) => (
-              <NavItem key={i}>
-                <NavLink
-                  className={this.state.tab === i ? 'active' : ''}
-                  onClick={() => this.setTab(i)}>
-                  {tabName}
-                </NavLink>
-              </NavItem>
-            ))}
-          </Nav>
-        </div>
-      </Split>
+                    </thead>
+                    <tbody>
+                      {this.state.testResults.map((result, i) => result && (
+                        <tr key={i}>
+                          <td>{i}</td>
+                          <td>{result.status.description}</td>
+                          <td>{result.time == null ? '-' : Math.floor(result.time * 1000) + ' ms'}</td>
+                          <td>{result.memory == null ? '-' : result.memory + ' KB'}</td>
+                          <td><Button size="sm" onClick={() => this.setState({ tab: 0, input: result.input })}>Load</Button></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                )}
+              </TabPane>
+            </TabContent>
+            <Nav tabs>
+              {this.tabs.map((tabName, i) => (
+                <NavItem key={i}>
+                  <NavLink
+                    className={this.state.tab === i ? 'active' : ''}
+                    onClick={() => this.setTab(i)}>
+                    {tabName}
+                  </NavLink>
+                </NavItem>
+              ))}
+            </Nav>
+          </div>
+        </Split>
+      </AceContext.Provider>
     );
   }
 }

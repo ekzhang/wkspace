@@ -39,7 +39,8 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+        PrintWriter out = new PrintWriter(
+            new BufferedWriter(new OutputStreamWriter(System.out)));
 
         // your code here
 
