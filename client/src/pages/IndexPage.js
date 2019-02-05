@@ -31,17 +31,19 @@ class IndexPage extends Component {
       <div className="p-4 h-100" style={{ overflowY: 'auto' }}>
         <h1>Welcome!</h1>
         <div className="d-flex flex-wrap">
-          {this.state.recent ? this.state.recent.map(workspace =>
-            <Card key={workspace.id} className="m-2" style={{ flexBasis: '250px' }}>
-              <CardBody>
-                <CardTitle className="font-weight-bold">{workspace.problem.title}</CardTitle>
-                <CardSubtitle className="font-italic">{moment(workspace.updatedAt).fromNow()}</CardSubtitle>
-                <CardText>{workspace.solution && (languages[workspace.solution.language] || {}).name}</CardText>
-                <Link to={`/workspace/${workspace.id}`}><Button>Open</Button></Link>
-                <Spacer width={6} />
-                <Button color="danger" onClick={() => this.remove(workspace.id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>
-              </CardBody>
-            </Card>
+          {this.state.recent ? (
+            this.state.recent.length ? this.state.recent.map(workspace =>
+              <Card key={workspace.id} className="m-2" style={{ flexBasis: '250px' }}>
+                <CardBody>
+                  <CardTitle className="font-weight-bold">{workspace.problem.title}</CardTitle>
+                  <CardSubtitle className="font-italic">{moment(workspace.updatedAt).fromNow()}</CardSubtitle>
+                  <CardText>{workspace.solution && (languages[workspace.solution.language] || {}).name}</CardText>
+                  <Link to={`/workspace/${workspace.id}`}><Button>Open</Button></Link>
+                  <Spacer width={6} />
+                  <Button color="danger" onClick={() => this.remove(workspace.id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>
+                </CardBody>
+              </Card>
+            ) : <p>No recent workspaces. Why not <Link to="/workspace">create one</Link>?</p>
           ) : <Spinner type="grow" className="m-2" />}
         </div>
       </div>
