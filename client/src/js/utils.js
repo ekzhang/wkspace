@@ -5,3 +5,15 @@ export function download(fileName, content, contentType = 'text/plain') {
   link.href = window.URL.createObjectURL(blob);
   link.click();
 }
+
+export function recentWorkspaces() {
+  return localStorage.getItem('recentWorkspaces') || '';
+}
+
+export function addWorkspace(id) {
+  const ar = recentWorkspaces().split(',').filter(s => s);
+  if (!ar.includes(id)) {
+    ar.push(id);
+    localStorage.setItem('recentWorkspaces', ar.join(','));
+  }
+}

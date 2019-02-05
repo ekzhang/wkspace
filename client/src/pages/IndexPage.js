@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { api } from '../js/api';
 import languages from '../js/languages';
+import { recentWorkspaces } from '../js/utils';
 import { Card, CardBody, CardTitle, CardSubtitle, CardText, Button, Spinner } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -12,7 +13,7 @@ class IndexPage extends Component {
   state = { recent: null };
 
   async componentDidMount() {
-    const { data } = await api.get('/workspace');
+    const { data } = await api.get(`/workspace?ids=${recentWorkspaces()}`);
     this.setState({ recent: data });
   }
 

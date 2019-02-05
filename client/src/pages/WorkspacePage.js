@@ -8,6 +8,7 @@ import Spacer from '../components/Spacer';
 import { api } from '../js/api';
 import languages from '../js/languages';
 import debounce from 'lodash/debounce';
+import { addWorkspace } from '../js/utils';
 
 const defaultLanguage = 10;
 
@@ -31,6 +32,7 @@ class WorkspacePage extends Component {
   workspaceSave = debounce(this.workspaceSave.bind(this), 1000);
 
   loadState(data) {
+    addWorkspace(data.id);
     if (data.solution == null)
       data.solution = defaultSolution();
     this.setState({

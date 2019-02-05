@@ -22,7 +22,15 @@ router.get('/problem', (req, res) => {
 });
 
 router.get('/workspace', async (req, res) => {
-  return res.json(await Workspace.find({}, null, { sort: { updatedAt: -1 } }));
+  const { ids } = req.query;
+  if (typeof ids !== 'string')
+    return res.status(400).send('Missing list of ids');
+  const docs = await Workspace.find(
+    { id: { $in: ids.split(',') } },
+    'id updatedAt problem.title solution.language',
+    { sort: { updatedAt: -1 } }
+  );
+  return res.json(docs);
 });
 
 router.post('/workspace', async (req, res) => {
