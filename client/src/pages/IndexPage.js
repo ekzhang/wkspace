@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { api } from '../js/api';
 import languages from '../js/languages';
-import { Card, CardBody, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
+import { Card, CardBody, CardTitle, CardSubtitle, CardText, Button, Spinner } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,7 +30,7 @@ class IndexPage extends Component {
       <div className="p-4 h-100" style={{ overflowY: 'auto' }}>
         <h1>Welcome!</h1>
         <div className="d-flex flex-wrap">
-          {this.state.recent && this.state.recent.map(workspace =>
+          {this.state.recent ? this.state.recent.map(workspace =>
             <Card key={workspace._id} className="m-2" style={{ flexBasis: '250px' }}>
               <CardBody>
                 <CardTitle className="font-weight-bold">{workspace.problem.title}</CardTitle>
@@ -41,7 +41,7 @@ class IndexPage extends Component {
                 <Button color="danger" onClick={() => this.remove(workspace._id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>
               </CardBody>
             </Card>
-          )}
+          ) : <Spinner type="grow" className="m-2" />}
         </div>
       </div>
     );
