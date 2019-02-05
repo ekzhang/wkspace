@@ -68,7 +68,7 @@ class WorkspacePage extends Component {
     this.setState({ loading: true });
     try {
       const { data } = await api.post('/workspace', { type: 'CF', id: this.state.problemId });
-      this.props.history.push(`/workspace/${data._id}`);
+      this.props.history.push(`/workspace/${data.id}`);
       this.loadState(data);
     }
     catch (e) {

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const workspaceSchema = new mongoose.Schema({
+  id: String,
   problem: {
     title: String,
     timeLimit: String,

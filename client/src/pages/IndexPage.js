@@ -20,7 +20,7 @@ class IndexPage extends Component {
     const resp = await api.delete(`/workspace/${id}`);
     if (resp.status === 200) {
       this.setState(state => ({
-        recent: state.recent.filter(obj => obj._id !== id)
+        recent: state.recent.filter(obj => obj.id !== id)
       }));
     }
   }
@@ -31,14 +31,14 @@ class IndexPage extends Component {
         <h1>Welcome!</h1>
         <div className="d-flex flex-wrap">
           {this.state.recent ? this.state.recent.map(workspace =>
-            <Card key={workspace._id} className="m-2" style={{ flexBasis: '250px' }}>
+            <Card key={workspace.id} className="m-2" style={{ flexBasis: '250px' }}>
               <CardBody>
                 <CardTitle className="font-weight-bold">{workspace.problem.title}</CardTitle>
                 <CardSubtitle className="font-italic">{moment(workspace.updatedAt).fromNow()}</CardSubtitle>
                 <CardText>{workspace.solution && (languages[workspace.solution.language] || {}).name}</CardText>
-                <Link to={`/workspace/${workspace._id}`}><Button>Open</Button></Link>
+                <Link to={`/workspace/${workspace.id}`}><Button>Open</Button></Link>
                 <Spacer width={6} />
-                <Button color="danger" onClick={() => this.remove(workspace._id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>
+                <Button color="danger" onClick={() => this.remove(workspace.id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>
               </CardBody>
             </Card>
           ) : <Spinner type="grow" className="m-2" />}
