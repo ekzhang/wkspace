@@ -1,13 +1,12 @@
 const express = require('express');
 const path = require('path');
 const http = require('http');
-const bodyParser = require('body-parser');
 
 const app = express();
 
 // Parsers for POST data
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
