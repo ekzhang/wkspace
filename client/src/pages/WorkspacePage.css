@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-.problem-select {
+.problem-pane .problem-select {
   display: flex;
   flex-shrink: 0;
   padding: 12px;

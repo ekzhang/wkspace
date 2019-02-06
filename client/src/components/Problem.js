@@ -14,6 +14,10 @@ function textArray(ar) {
 class Problem extends Component {
   problemStatement = React.createRef();
 
+  componentDidMount() {
+    this.componentDidUpdate();
+  }
+
   componentDidUpdate() {
     if (this.problemStatement.current) {
       renderMathInElement(this.problemStatement.current, {
