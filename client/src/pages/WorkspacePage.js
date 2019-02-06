@@ -29,6 +29,18 @@ class WorkspacePage extends Component {
   handleWorkspaceChange = this.handleWorkspaceChange.bind(this);
   workspaceSave = debounce(this.workspaceSave.bind(this), 1000);
 
+  constructor(props) {
+    super(props);
+    const { id } = props.match.params;
+    if (id) {
+      this.state.loading = true;
+      api.get(`/workspace/${id}`).then(({ data }) => {
+        this.loadState(data);
+        this.setState({ loading: false });
+      });
+    }
+  }
+
   loadState(data) {
     addWorkspace(data.id);
     if (data.id !== this.props.match.params.id)
@@ -51,16 +63,6 @@ class WorkspacePage extends Component {
   workspaceSave() {
     if (this.props.match.params.id)
       api.put(`/workspace/${this.props.match.params.id}/save`, this.state.solution);
-  }
-
-  async componentDidMount() {
-    const { id } = this.props.match.params;
-    if (id) {
-      this.setState({ loading: true });
-      const { data } = await api.get(`/workspace/${id}`);
-      this.loadState(data);
-      this.setState({ loading: false });
-    }
   }
 
   render() {
