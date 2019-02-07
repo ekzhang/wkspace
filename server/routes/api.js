@@ -18,7 +18,7 @@ router.get('/problem', (req, res) => {
 
   scraper(type, pid)
     .then(value => res.json(value))
-    .catch(e => res.status(400).send(e));
+    .catch(e => res.status(400).send(e.message));
 });
 
 router.get('/workspace', async (req, res) => {
@@ -44,7 +44,7 @@ router.post('/workspace', async (req, res) => {
     problem = await scraper(type, pid);
   }
   catch (e) {
-    return res.status(400).send(e)
+    return res.status(400).send(e.message);
   }
   const obj = new Workspace({ problem, id: await randomId() });
   await obj.save();

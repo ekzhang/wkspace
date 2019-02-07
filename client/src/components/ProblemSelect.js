@@ -23,7 +23,7 @@ class ProblemSelect extends Component {
       this.props.onChange(data);
     }
     catch (e) {
-      alert(e);
+      alert('Error: ' + e.response.data);
     }
     finally {
       this.setState({ loading: false });

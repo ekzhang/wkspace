@@ -48,7 +48,7 @@ async function getCodeforcesProblem ({ contest, problem }) {
     };
   }
   catch (err) {
-    throw 'Could not find or parse problem';
+    throw new Error('Could not find or parse problem');
   }
 }
 
@@ -57,10 +57,10 @@ function getHackerrankProblem ({ contest, problem }) {
     const url = (contest
       ? `https://www.hackerrank.com/contests/${contest}/challenges/${problem}`
       : `https://www.hackerrank.com/challenges/${problem}/problem`);
-    throw 'Not implemented';
+    throw new Error('Not implemented');
   }
   catch (err) {
-    throw 'Could not find or parse problem';
+    throw new Error('Could not find or parse problem');
   }
 }
 
@@ -69,7 +69,7 @@ function scraper (type, pid) {
     // Codeforces
     const match = pid.match(/([0-9]+)([A-Z][A-Z0-9]*)$/);
     if (!match)
-      throw 'Invalid Codeforces problem ID';
+      throw new Error('Invalid Codeforces problem ID');
     const contest = match[1];
     const problem = match[2];
     return getCodeforcesProblem({ contest, problem });
@@ -85,7 +85,7 @@ function scraper (type, pid) {
     return getHackerrankProblem({ contest, problem });
   }
   else {
-    throw 'Invalid problem type';
+    throw new Error('Invalid problem type');
   }
 }
 
