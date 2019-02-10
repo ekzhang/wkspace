@@ -27,13 +27,17 @@ class WorkspacePage extends Component {
   };
   loadState = this.loadState.bind(this);
   handleWorkspaceChange = this.handleWorkspaceChange.bind(this);
-  workspaceSave = debounce(this.workspaceSave.bind(this), 1000);
+  workspaceSaveDebounced = debounce(this.workspaceSave, 1000);
 
   constructor(props) {
     super(props);
-    const { id } = props.match.params;
-    if (id) {
+    if (props.match.params.id)
       this.state.loading = true;
+  }
+
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    if (id) {
       api.get(`/workspace/${id}`).then(({ data }) => {
         this.loadState(data);
         this.setState({ loading: false });
@@ -57,7 +61,7 @@ class WorkspacePage extends Component {
     this.setState(state => ({
       solution: { ...state.solution, ...value }
     }));
-    this.workspaceSave();
+    this.workspaceSaveDebounced();
   }
 
   workspaceSave() {
