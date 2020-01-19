@@ -10,7 +10,7 @@ import debounce from 'lodash/debounce';
 import { addWorkspace } from '../js/utils';
 import ProblemSelect from '../components/ProblemSelect';
 
-const defaultLanguage = 10;
+const defaultLanguage = 54;
 
 function defaultSolution(language = defaultLanguage) {
   return {

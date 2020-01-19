@@ -1,7 +1,7 @@
 export default {
-  4: {
-    name: 'C',
-    mode: 'c_cpp',
+  50: {
+    name: "C",
+    mode: "c_cpp",
     template: `#include <stdio.h>
 
 int main(void) {
@@ -10,9 +10,9 @@ int main(void) {
 }
 `
   },
-  10: {
-    name: 'C++',
-    mode: 'c_cpp',
+  54: {
+    name: "C++",
+    mode: "c_cpp",
     template: `#include <bits/stdc++.h>
 using namespace std;
 
@@ -30,9 +30,9 @@ int main() {
 }
 `
   },
-  26: {
-    name: 'Java',
-    mode: 'java',
+  62: {
+    name: "Java",
+    mode: "java",
     template: `import java.io.*;
 import java.util.*;
 
@@ -49,16 +49,16 @@ public class Main {
 }
 `
   },
-  34: {
-    name: 'Python 3',
-    mode: 'python',
+  71: {
+    name: "Python 3",
+    mode: "python",
     template: `# your code here
 `
   },
-  38: {
-    name: 'Ruby',
-    mode: 'ruby',
+  72: {
+    name: "Ruby",
+    mode: "ruby",
     template: `# your code here
 `
   }
-}
+};
