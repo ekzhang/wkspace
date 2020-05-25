@@ -31,7 +31,7 @@ class Editor extends Component {
         <div className="editor-menu">
           <FileUpload>
             {upload => (
-              <Button onClick={async () => this.props.onChange(await upload())}>
+              <Button onClick={async () => this.props.onChange({ code: await upload() })}>
                 <FontAwesomeIcon icon={faUpload} /> Load
               </Button>
             )}
