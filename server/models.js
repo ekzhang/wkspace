@@ -29,8 +29,20 @@ const workspaceSchema = new mongoose.Schema({
   timestamps: true
 });
 
+const shareSchema = new mongoose.Schema({
+  id: String,
+  solution: {
+    language: Number,
+    code: String
+  }
+}, {
+  timestamps: true
+});
+
 const Workspace = mongoose.model('Workspace', workspaceSchema);
+const Share = mongoose.model('Share', shareSchema);
 
 module.exports = {
-  Workspace
-}
+  Workspace,
+  Share
+};

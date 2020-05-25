@@ -2,7 +2,7 @@ const assert = require('assert');
 const express = require('express');
 const scraper = require('../scraper');
 const { randomId } = require('../utils');
-const { Workspace } = require('../models');
+const { Workspace, Share } = require('../models');
 
 const router = express.Router();
 
@@ -52,16 +52,41 @@ router.post('/workspace', async (req, res) => {
 });
 
 router.get('/workspace/:id', async (req, res) => {
+  if (typeof req.params.id !== 'string')
+    return res.status(400).send('Missing `id` parameter');
   return res.json(await Workspace.findOne({ id: req.params.id }));
 });
 
 router.delete('/workspace/:id', async (req, res) => {
+  if (typeof req.params.id !== 'string')
+    return res.status(400).send('Missing `id` parameter');
   return res.json(await Workspace.findOneAndDelete({ id: req.params.id }));
 });
 
 router.put('/workspace/:id/save', async (req, res) => {
+  if (typeof req.params.id !== 'string')
+    return res.status(400).send('Missing `id` parameter');
   const obj = await Workspace.findOneAndUpdate({ id: req.params.id }, { solution: req.body }, { new: true });
   return res.json(obj);
+});
+
+router.post('/share', async (req, res) => {
+  const { language, code } = req.body;
+  if (typeof language !== 'number' || typeof code !== 'string')
+    return res.status(400).send('Missing `language` or `code` parameter');
+
+  const obj = new Share({
+    solution: { language, code },
+    id: await randomId()
+  });
+  await obj.save();
+  return res.json(obj);
+});
+
+router.get('/share/:id', async (req, res) => {
+  if (typeof req.params.id !== 'string')
+    return res.status(400).send('Missing `id` parameter');
+  return res.json(await Share.findOne({ id: req.params.id }));
 });
 
 module.exports = router;
