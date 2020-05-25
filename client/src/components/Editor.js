@@ -37,7 +37,7 @@ class Editor extends Component {
             )}
           </FileUpload>
           <Spacer />
-          <Button onClick={() => alert('Not implemented')}>
+          <Button onClick={() => this.props.onShare()}>
             <FontAwesomeIcon icon={faShareAlt} /> Share
           </Button>
           <Button onClick={() => download('main.cpp', this.props.value.code)}>

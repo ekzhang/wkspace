@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Split from 'react-split';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Table, Button } from 'reactstrap';
 import Editor from './Editor';
-import { judge } from '../js/api';
+import { judge, api } from '../js/api';
 import './Workspace.css';
 import Ace from './Ace';
 import Code from './Code';
@@ -23,6 +23,7 @@ class Workspace extends Component {
   runCode = this.runCode.bind(this);
   runTests = this.runTests.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
+  handleShare = this.handleShare.bind(this);
   handleAceChange = this.handleAceChange.bind(this);
   tabs = ['Input', 'Output', 'Stderr', 'Compilation', 'Execution', 'Tests'];
 
@@ -92,6 +93,14 @@ class Workspace extends Component {
     window.open(this.props.problem.submitLink, '_blank');
   }
 
+  async handleShare() {
+    const { solution } = this.props;
+    const resp = await api.post(`/share`, solution);
+    if (resp.status === 200) {
+      window.open(`/share/${resp.data.id}`, '_blank');
+    }
+  }
+
   handleAceChange(aceProps) {
     this.setState(state => ({
       aceProps: { ...state.aceProps, ...aceProps }
@@ -112,6 +121,7 @@ class Workspace extends Component {
             onRun={this.runCode}
             onTest={this.runTests}
             onSubmit={this.handleSubmit}
+            onShare={this.handleShare}
             onAceChange={this.handleAceChange}
             working={this.state.working}
           />

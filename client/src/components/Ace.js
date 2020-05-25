@@ -20,7 +20,7 @@ import AceContext from '../context/AceContext';
 function Ace(props) {
   return (
     <ReactResizeDetector handleWidth handleHeight>
-      {(width, height) =>
+      {({ width, height }) =>
         <AceContext.Consumer>
           {aceProps =>
             <AceEditor
