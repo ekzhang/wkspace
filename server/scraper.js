@@ -31,11 +31,11 @@ async function getCodeforcesProblem ({ contest, problem }) {
     }
 
     return {
-      title: header.find('.title').text(),
-      timeLimit: header.find('.time-limit').justtext(),
-      memoryLimit: header.find('.memory-limit').justtext(),
-      input: header.find('.input-file').justtext(),
-      output: header.find('.output-file').justtext(),
+      title: header.find('.title').text().trim(),
+      timeLimit: header.find('.time-limit').justtext().trim(),
+      memoryLimit: header.find('.memory-limit').justtext().trim(),
+      input: header.find('.input-file').justtext().trim(),
+      output: header.find('.output-file').justtext().trim(),
       statement: {
         text: statement.children().eq(1).children().textArray(),
         inputSpec: statement.find('.input-specification > p').textArray(),
