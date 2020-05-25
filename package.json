@@ -14,14 +14,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.1",
-    "cheerio": "^1.0.0-rc.2",
-    "express": "^4.16.4",
-    "mongoose": "^5.4.9"
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.15"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0",
-    "nodemon": "^1.18.9"
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
   },
   "engines": {
     "node": "10.3.0",
