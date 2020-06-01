@@ -8,6 +8,10 @@ import Ace from './Ace';
 import Code from './Code';
 import AceContext from '../context/AceContext';
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 class Workspace extends Component {
   state = {
     input: '',
@@ -35,10 +39,12 @@ class Workspace extends Component {
       expected_output: output || null
     });
     const { token } = resp.data;
+    await sleep(3000);
     while (true) {
       const { data } = await judge.get('/submissions/' + token);
       if (data.status.id > 2) // not queued or processing
         return data;
+      await sleep(5000);
     }
   }
 

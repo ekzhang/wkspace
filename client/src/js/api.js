@@ -1,4 +1,10 @@
 import axios from 'axios';
 
 export const api = axios.create({ baseURL: '/api/' });
-export const judge = axios.create({ baseURL: 'https://api.judge0.com/' });
+export const judge = axios.create({
+  baseURL: 'https://judge0.p.rapidapi.com/',
+  headers: {
+    'X-RapidAPI-Host': 'judge0.p.rapidapi.com',
+    'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY
+  }
+});
