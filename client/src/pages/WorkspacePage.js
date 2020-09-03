@@ -78,7 +78,14 @@ class WorkspacePage extends Component {
       );
     }
     return (
-      <Split direction="horizontal" sizes={[50, 50]} minSize={400} gutterSize={12} className="split-parent-horizontal">
+      <Split
+        direction="horizontal"
+        sizes={[50, 50]}
+        minSize={0}
+        snapOffset={400}
+        gutterSize={12}
+        className="split-parent-horizontal"
+      >
         <div className="problem-pane">
           <div className="problem-select">
             <ProblemSelect onChange={this.loadState} />
