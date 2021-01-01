@@ -1,8 +1,8 @@
-import React from 'react';
+import { createContext } from 'react';
 
-const AceContext = React.createContext({
+const AceContext = createContext({
   theme: 'dawn',
-  keyboardHandler: ''
+  keyboardHandler: '',
 });
 
 export default AceContext;

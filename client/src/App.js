@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
   Link,
-  NavLink as RRNavLink
+  NavLink as RRNavLink,
 } from 'react-router-dom';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import WorkspacePage from './pages/WorkspacePage';
@@ -15,7 +15,7 @@ import './App.css';
 
 class App extends Component {
   render() {
-    const navbarHeight = "56px";
+    const navbarHeight = '56px';
     return (
       <Router>
         <>
@@ -37,7 +37,7 @@ class App extends Component {
             </Nav>
           </Navbar>
           <div
-            style={{ height: `calc(100% - ${navbarHeight})`, overflow: "none" }}
+            style={{ height: `calc(100% - ${navbarHeight})`, overflow: 'none' }}
           >
             <Switch>
               <Route exact path="/" component={IndexPage} />

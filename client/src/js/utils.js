@@ -11,7 +11,9 @@ export function recentWorkspaces() {
 }
 
 export function addWorkspace(id) {
-  const ar = recentWorkspaces().split(',').filter(s => s);
+  const ar = recentWorkspaces()
+    .split(',')
+    .filter((s) => s);
   if (!ar.includes(id)) {
     ar.push(id);
     localStorage.setItem('recentWorkspaces', ar.join(','));

@@ -1,18 +1,18 @@
-export default {
+const languages = {
   50: {
-    name: "C",
-    mode: "c_cpp",
+    name: 'C',
+    mode: 'c_cpp',
     template: `#include <stdio.h>
 
 int main(void) {
     // your code here
     return 0;
 }
-`
+`,
   },
   54: {
-    name: "C++",
-    mode: "c_cpp",
+    name: 'C++',
+    mode: 'c_cpp',
     template: `#include <bits/stdc++.h>
 using namespace std;
 
@@ -28,11 +28,11 @@ int main() {
     cout.flush();
     return 0;
 }
-`
+`,
   },
   62: {
-    name: "Java",
-    mode: "java",
+    name: 'Java',
+    mode: 'java',
     template: `import java.io.*;
 import java.util.*;
 
@@ -47,18 +47,20 @@ public class Main {
         out.close();
     }
 }
-`
+`,
   },
   71: {
-    name: "Python 3",
-    mode: "python",
+    name: 'Python 3',
+    mode: 'python',
     template: `# your code here
-`
+`,
   },
   72: {
-    name: "Ruby",
-    mode: "ruby",
+    name: 'Ruby',
+    mode: 'ruby',
     template: `# your code here
-`
-  }
+`,
+  },
 };
+
+export default languages;

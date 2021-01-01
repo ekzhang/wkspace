@@ -41,7 +41,8 @@
   height: 100%;
 }
 
-.results-table td, .results-table th {
-  padding: .5rem;
+.results-table td,
+.results-table th {
+  padding: 0.5rem;
   vertical-align: middle;
 }

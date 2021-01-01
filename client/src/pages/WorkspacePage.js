@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Split from 'react-split';
 import { Spinner } from 'reactstrap';
 import Problem from '../components/Problem';
@@ -15,7 +15,7 @@ const defaultLanguage = 54;
 function defaultSolution(language = defaultLanguage) {
   return {
     language,
-    code: languages[language].template
+    code: languages[language].template,
   };
 }
 
@@ -23,7 +23,7 @@ class WorkspacePage extends Component {
   state = {
     problem: null,
     solution: defaultSolution(),
-    loading: false
+    loading: false,
   };
   loadState = this.loadState.bind(this);
   handleWorkspaceChange = this.handleWorkspaceChange.bind(this);
@@ -31,8 +31,7 @@ class WorkspacePage extends Component {
 
   constructor(props) {
     super(props);
-    if (props.match.params.id)
-      this.state.loading = true;
+    if (props.match.params.id) this.state.loading = true;
   }
 
   componentDidMount() {
@@ -49,24 +48,26 @@ class WorkspacePage extends Component {
     addWorkspace(data.id);
     if (data.id !== this.props.match.params.id)
       this.props.history.push(`/workspace/${data.id}`);
-    if (data.solution == null)
-      data.solution = defaultSolution();
+    if (data.solution == null) data.solution = defaultSolution();
     this.setState({
       problem: data.problem,
-      solution: data.solution
+      solution: data.solution,
     });
   }
 
   handleWorkspaceChange(value) {
-    this.setState(state => ({
-      solution: { ...state.solution, ...value }
+    this.setState((state) => ({
+      solution: { ...state.solution, ...value },
     }));
     this.workspaceSaveDebounced();
   }
 
   workspaceSave() {
     if (this.props.match.params.id)
-      api.put(`/workspace/${this.props.match.params.id}/save`, this.state.solution);
+      api.put(
+        `/workspace/${this.props.match.params.id}/save`,
+        this.state.solution
+      );
   }
 
   render() {
@@ -95,7 +96,8 @@ class WorkspacePage extends Component {
         <Workspace
           problem={this.state.problem}
           solution={this.state.solution}
-          onChange={this.handleWorkspaceChange} />
+          onChange={this.handleWorkspaceChange}
+        />
       </Split>
     );
   }

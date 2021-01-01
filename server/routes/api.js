@@ -1,8 +1,8 @@
-const assert = require('assert');
-const express = require('express');
-const scraper = require('../scraper');
-const { randomId } = require('../utils');
-const { Workspace, Share } = require('../models');
+import express from 'express';
+import scraper from '../scraper.js';
+
+import { randomId } from '../utils.js';
+import { Workspace, Share } from '../models.js';
 
 const router = express.Router();
 
@@ -17,8 +17,8 @@ router.get('/problem', (req, res) => {
     return res.status(400).send('Missing `type` or `id` parameter');
 
   scraper(type, pid)
-    .then(value => res.json(value))
-    .catch(e => res.status(400).send(e.message));
+    .then((value) => res.json(value))
+    .catch((e) => res.status(400).send(e.message));
 });
 
 router.get('/workspace', async (req, res) => {
@@ -42,8 +42,7 @@ router.post('/workspace', async (req, res) => {
   let problem;
   try {
     problem = await scraper(type, pid);
-  }
-  catch (e) {
+  } catch (e) {
     return res.status(400).send(e.message);
   }
   const obj = new Workspace({ problem, id: await randomId() });
@@ -66,7 +65,11 @@ router.delete('/workspace/:id', async (req, res) => {
 router.put('/workspace/:id/save', async (req, res) => {
   if (typeof req.params.id !== 'string')
     return res.status(400).send('Missing `id` parameter');
-  const obj = await Workspace.findOneAndUpdate({ id: req.params.id }, { solution: req.body }, { new: true });
+  const obj = await Workspace.findOneAndUpdate(
+    { id: req.params.id },
+    { solution: req.body },
+    { new: true }
+  );
   return res.json(obj);
 });
 
@@ -77,7 +80,7 @@ router.post('/share', async (req, res) => {
 
   const obj = new Share({
     solution: { language, code },
-    id: await randomId()
+    id: await randomId(),
   });
   await obj.save();
   return res.json(obj);
@@ -89,4 +92,4 @@ router.get('/share/:id', async (req, res) => {
   return res.json(await Share.findOne({ id: req.params.id }));
 });
 
-module.exports = router;
+export default router;

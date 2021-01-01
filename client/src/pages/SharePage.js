@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Spinner } from 'reactstrap';
 import moment from 'moment';
 import Ace from '../components/Ace';
@@ -7,8 +7,8 @@ import languages from '../js/languages';
 
 function SharePage({ match }) {
   const { id } = match.params;
-  const [ share, setShare ] = useState(null);
-  const [ time, setTime ] = useState(moment());
+  const [share, setShare] = useState(null);
+  const [time, setTime] = useState(moment());
 
   useEffect(() => {
     const id = setInterval(() => setTime(moment()), 5000);
@@ -16,7 +16,7 @@ function SharePage({ match }) {
   });
 
   useEffect(() => {
-    api.get(`/share/${id}`).then(resp => {
+    api.get(`/share/${id}`).then((resp) => {
       if (resp.status === 200) {
         setShare(resp.data);
       }
@@ -32,7 +32,9 @@ function SharePage({ match }) {
   }
 
   return (
-    <Container style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Container
+      style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+    >
       <div style={{ margin: '8px 0' }}>
         Code shared: <strong>{time.to(share.createdAt)}</strong>
       </div>

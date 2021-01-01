@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-c_cpp';
@@ -20,9 +19,9 @@ import AceContext from '../context/AceContext';
 function Ace(props) {
   return (
     <ReactResizeDetector handleWidth handleHeight>
-      {({ width, height }) =>
+      {({ width, height }) => (
         <AceContext.Consumer>
-          {aceProps =>
+          {(aceProps) => (
             <AceEditor
               mode="text"
               height={`100%/*${height}*/`} // Hack to call resize() properly
@@ -40,11 +39,11 @@ function Ace(props) {
               {...aceProps}
               {...props}
             />
-          }
+          )}
         </AceContext.Consumer>
-      }
+      )}
     </ReactResizeDetector>
-  )
+  );
 }
 
 export default Ace;

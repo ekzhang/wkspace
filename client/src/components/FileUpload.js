@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import { createRef, Component } from 'react';
 
 class FileUpload extends Component {
-  input = React.createRef();
+  input = createRef();
   upload = this.upload.bind(this);
   handleChange = this.handleChange.bind(this);
 
@@ -16,16 +16,13 @@ class FileUpload extends Component {
 
   handleChange() {
     const { files } = this.input.current;
-    if (!files.length)
-      return null;
+    if (!files.length) return null;
     const file = files[0];
     const reader = new FileReader();
-    reader.onload = event =>
-      this.resolve(event.target.result);
+    reader.onload = (event) => this.resolve(event.target.result);
     try {
       reader.readAsText(file);
-    }
-    catch (e) {
+    } catch (e) {
       this.reject(e);
     }
   }
@@ -33,10 +30,15 @@ class FileUpload extends Component {
   render() {
     return (
       <>
-        <input type="file" style={{display: 'none'}} ref={this.input} onChange={this.handleChange} />
+        <input
+          type="file"
+          style={{ display: 'none' }}
+          ref={this.input}
+          onChange={this.handleChange}
+        />
         {this.props.children(this.upload)}
       </>
-    )
+    );
   }
 }
 

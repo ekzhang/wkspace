@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Form, Input, Button, Spinner } from 'reactstrap';
 import Spacer from '../components/Spacer';
 import { api } from '../js/api';
@@ -6,7 +6,7 @@ import { api } from '../js/api';
 class ProblemSelect extends Component {
   state = {
     problemId: '',
-    loading: false
+    loading: false,
   };
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
@@ -19,13 +19,14 @@ class ProblemSelect extends Component {
     event.preventDefault();
     this.setState({ loading: true });
     try {
-      const { data } = await api.post('/workspace', { type: 'CF', id: this.state.problemId });
+      const { data } = await api.post('/workspace', {
+        type: 'CF',
+        id: this.state.problemId,
+      });
       this.props.onChange(data);
-    }
-    catch (e) {
+    } catch (e) {
       alert('Error: ' + JSON.stringify(e.response.data));
-    }
-    finally {
+    } finally {
       this.setState({ loading: false });
     }
   }
@@ -33,9 +34,17 @@ class ProblemSelect extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit} className="d-flex w-100">
-        <Input bsSize="sm" autoFocus placeholder="Codeforces Problem ID" value={this.state.problemId} onChange={this.handleChange} />
+        <Input
+          bsSize="sm"
+          autoFocus
+          placeholder="Codeforces Problem ID"
+          value={this.state.problemId}
+          onChange={this.handleChange}
+        />
         <Spacer width={6} />
-        <Button size="sm" disabled={this.state.loading}>{this.state.loading ? <Spinner size="sm" /> : 'Parse'}</Button>
+        <Button size="sm" disabled={this.state.loading}>
+          {this.state.loading ? <Spinner size="sm" /> : 'Parse'}
+        </Button>
       </Form>
     );
   }

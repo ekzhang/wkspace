@@ -1,7 +1,24 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faShareAlt, faDownload, faTools, faPlay, faCheck, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { Button, ButtonDropdown, DropdownToggle, DropdownMenu, Form, FormGroup, Label, Input } from 'reactstrap';
+import {
+  faUpload,
+  faShareAlt,
+  faDownload,
+  faTools,
+  faPlay,
+  faCheck,
+  faPaperPlane,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  Button,
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from 'reactstrap';
 import Spacer from './Spacer';
 import Ace from './Ace';
 import FileUpload from './FileUpload';
@@ -15,8 +32,8 @@ class Editor extends Component {
   handleLanguage = this.handleLanguage.bind(this);
 
   toggleSettings() {
-    this.setState(state => ({
-      settingsOpen: !state.settingsOpen
+    this.setState((state) => ({
+      settingsOpen: !state.settingsOpen,
     }));
   }
 
@@ -30,8 +47,12 @@ class Editor extends Component {
       <div className="editor-area">
         <div className="editor-menu">
           <FileUpload>
-            {upload => (
-              <Button onClick={async () => this.props.onChange({ code: await upload() })}>
+            {(upload) => (
+              <Button
+                onClick={async () =>
+                  this.props.onChange({ code: await upload() })
+                }
+              >
                 <FontAwesomeIcon icon={faUpload} /> Load
               </Button>
             )}
@@ -48,20 +69,29 @@ class Editor extends Component {
         <Ace
           mode={languages[this.props.value.language].mode}
           value={this.props.value.code}
-          onChange={code => this.props.onChange({ code })}
+          onChange={(code) => this.props.onChange({ code })}
         />
 
         <div className="editor-menu">
-          <ButtonDropdown isOpen={this.state.settingsOpen} toggle={this.toggleSettings} direction="up">
+          <ButtonDropdown
+            isOpen={this.state.settingsOpen}
+            toggle={this.toggleSettings}
+            direction="up"
+          >
             <DropdownToggle>
               <FontAwesomeIcon icon={faTools} /> Settings
             </DropdownToggle>
             <DropdownMenu className="p-4">
               <AceContext.Consumer>
-                {aceProps =>
+                {(aceProps) => (
                   <Form style={{ width: 300 }}>
                     <FormGroup className="form-row">
-                      <Label className="col-4 font-weight-bold" for="language-select">Language</Label>
+                      <Label
+                        className="col-4 font-weight-bold"
+                        for="language-select"
+                      >
+                        Language
+                      </Label>
                       <Spacer width={6} />
                       <Input
                         className="col"
@@ -69,14 +99,22 @@ class Editor extends Component {
                         type="select"
                         id="language-select"
                         value={this.props.value.language}
-                        onChange={this.handleLanguage}>
-                        {Object.entries(languages).map(([id, { name }]) =>
-                          <option key={id} value={id}>{name}</option>
-                        )}
+                        onChange={this.handleLanguage}
+                      >
+                        {Object.entries(languages).map(([id, { name }]) => (
+                          <option key={id} value={id}>
+                            {name}
+                          </option>
+                        ))}
                       </Input>
                     </FormGroup>
                     <FormGroup className="form-row">
-                      <Label className="col-4 font-weight-bold" for="theme-select">Theme</Label>
+                      <Label
+                        className="col-4 font-weight-bold"
+                        for="theme-select"
+                      >
+                        Theme
+                      </Label>
                       <Spacer width={6} />
                       <Input
                         className="col"
@@ -84,7 +122,10 @@ class Editor extends Component {
                         type="select"
                         id="theme-select"
                         value={aceProps.theme}
-                        onChange={event => this.props.onAceChange({ theme: event.target.value })}>
+                        onChange={(event) =>
+                          this.props.onAceChange({ theme: event.target.value })
+                        }
+                      >
                         <option value="monokai">Monokai</option>
                         <option value="dawn">Dawn</option>
                         <option value="textmate">Textmate</option>
@@ -93,7 +134,12 @@ class Editor extends Component {
                       </Input>
                     </FormGroup>
                     <FormGroup className="form-row">
-                      <Label className="col-4 font-weight-bold" for="keybinding-select">Keybinding</Label>
+                      <Label
+                        className="col-4 font-weight-bold"
+                        for="keybinding-select"
+                      >
+                        Keybinding
+                      </Label>
                       <Spacer width={6} />
                       <Input
                         className="col"
@@ -101,14 +147,19 @@ class Editor extends Component {
                         type="select"
                         id="keybinding-select"
                         value={aceProps.keyboardHandler}
-                        onChange={event => this.props.onAceChange({ keyboardHandler: event.target.value })}>
+                        onChange={(event) =>
+                          this.props.onAceChange({
+                            keyboardHandler: event.target.value,
+                          })
+                        }
+                      >
                         <option value="">Default</option>
                         <option value="vim">Vim</option>
                         <option value="emacs">Emacs</option>
                       </Input>
                     </FormGroup>
                   </Form>
-                }
+                )}
               </AceContext.Consumer>
             </DropdownMenu>
           </ButtonDropdown>

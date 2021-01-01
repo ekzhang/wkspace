@@ -1,6 +1,14 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Split from 'react-split';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Table, Button } from 'reactstrap';
+import {
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Table,
+  Button,
+} from 'reactstrap';
 import Editor from './Editor';
 import { judge, api } from '../js/api';
 import './Workspace.css';
@@ -9,7 +17,7 @@ import Code from './Code';
 import AceContext from '../context/AceContext';
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 class Workspace extends Component {
@@ -21,8 +29,8 @@ class Workspace extends Component {
     tab: 0,
     aceProps: {
       theme: 'dawn',
-      keyboardHandler: ''
-    }
+      keyboardHandler: '',
+    },
   };
   runCode = this.runCode.bind(this);
   runTests = this.runTests.bind(this);
@@ -36,15 +44,15 @@ class Workspace extends Component {
       source_code: this.props.solution.code,
       language_id: this.props.solution.language,
       stdin: input || null,
-      expected_output: output || null
+      expected_output: output || null,
     });
     const { token } = resp.data;
-    await sleep(3000);
     while (true) {
       const { data } = await judge.get('/submissions/' + token);
-      if (data.status.id > 2) // not queued or processing
+      if (data.status.id > 2)
+        // not queued or processing
         return data;
-      await sleep(5000);
+      await sleep(1000);
     }
   }
 
@@ -53,20 +61,21 @@ class Workspace extends Component {
     try {
       const result = await this.run(this.state.input);
       let tab = 0;
-      if (result.status.id <= 4) // accepted (or WA)
+      if (result.status.id <= 4)
+        // accepted (or WA)
         tab = 1;
-      else if (result.status.id === 6) // compilation error
+      else if (result.status.id === 6)
+        // compilation error
         tab = 3;
-      else if (result.status.id <= 12) // runtime error or TLE
+      else if (result.status.id <= 12)
+        // runtime error or TLE
         tab = 4;
-      else // internal error
-        alert('An internal error occurred. Please try again.');
+      // internal error
+      else alert('An internal error occurred. Please try again.');
       this.setState({ result, tab });
-    }
-    catch (e) {
+    } catch (e) {
       alert('Error: ' + JSON.stringify(e.response.data));
-    }
-    finally {
+    } finally {
       this.setState({ working: false });
     }
   }
@@ -78,18 +87,20 @@ class Workspace extends Component {
     this.setState({
       testResults: new Array(testCases.length).fill(null),
       tab: 5,
-      working: true
+      working: true,
     });
-    await Promise.all(testCases.map(({ input, output }, index) =>
-      this.run(input, output).then(result => {
-        result.input = input;
-        this.setState((state) => {
-          const testResults = state.testResults.slice();
-          testResults[index] = result;
-          return { testResults };
-        });
-      })
-    ));
+    await Promise.all(
+      testCases.map(({ input, output }, index) =>
+        this.run(input, output).then((result) => {
+          result.input = input;
+          this.setState((state) => {
+            const testResults = state.testResults.slice();
+            testResults[index] = result;
+            return { testResults };
+          });
+        })
+      )
+    );
     this.setState({ working: false });
   }
 
@@ -108,8 +119,8 @@ class Workspace extends Component {
   }
 
   handleAceChange(aceProps) {
-    this.setState(state => ({
-      aceProps: { ...state.aceProps, ...aceProps }
+    this.setState((state) => ({
+      aceProps: { ...state.aceProps, ...aceProps },
     }));
   }
 
@@ -120,7 +131,12 @@ class Workspace extends Component {
   render() {
     return (
       <AceContext.Provider value={this.state.aceProps}>
-        <Split direction="vertical" sizes={[70, 30]} minSize={[100, 0]} gutterSize={4}>
+        <Split
+          direction="vertical"
+          sizes={[70, 30]}
+          minSize={[100, 0]}
+          gutterSize={4}
+        >
           <Editor
             value={this.props.solution}
             onChange={this.props.onChange}
@@ -134,13 +150,22 @@ class Workspace extends Component {
           <div className="results-view">
             <TabContent activeTab={this.state.tab}>
               <TabPane tabId={0}>
-                <Ace value={this.state.input} onChange={input => this.setState({ input })} />
+                <Ace
+                  value={this.state.input}
+                  onChange={(input) => this.setState({ input })}
+                />
               </TabPane>
               <TabPane tabId={1}>
-                <Ace value={(this.state.result && this.state.result.stdout) || ''} readOnly={true} />
+                <Ace
+                  value={(this.state.result && this.state.result.stdout) || ''}
+                  readOnly={true}
+                />
               </TabPane>
               <TabPane tabId={2}>
-                <Ace value={(this.state.result && this.state.result.stderr) || ''} readOnly={true} />
+                <Ace
+                  value={(this.state.result && this.state.result.stderr) || ''}
+                  readOnly={true}
+                />
               </TabPane>
               <TabPane tabId={3}>
                 {this.state.result && (
@@ -159,9 +184,21 @@ class Workspace extends Component {
               <TabPane tabId={4}>
                 {this.state.result && (
                   <div className="p-2">
-                    <p><b>Time:</b> {this.state.result.time == null ? '-' : Math.floor(this.state.result.time * 1000) + ' ms'}</p>
-                    <p><b>Memory:</b> {this.state.result.memory == null ? '-' : this.state.result.memory + ' KB'}</p>
-                    <p><b>Verdict:</b> {this.state.result.status.description}</p>
+                    <p>
+                      <b>Time:</b>{' '}
+                      {this.state.result.time == null
+                        ? '-'
+                        : Math.floor(this.state.result.time * 1000) + ' ms'}
+                    </p>
+                    <p>
+                      <b>Memory:</b>{' '}
+                      {this.state.result.memory == null
+                        ? '-'
+                        : this.state.result.memory + ' KB'}
+                    </p>
+                    <p>
+                      <b>Verdict:</b> {this.state.result.status.description}
+                    </p>
                   </div>
                 )}
               </TabPane>
@@ -178,15 +215,38 @@ class Workspace extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {this.state.testResults.map((result, i) => result && (
-                        <tr key={i}>
-                          <td>{i}</td>
-                          <td>{result.status.description}</td>
-                          <td>{result.time == null ? '-' : Math.floor(result.time * 1000) + ' ms'}</td>
-                          <td>{result.memory == null ? '-' : result.memory + ' KB'}</td>
-                          <td><Button size="sm" onClick={() => this.setState({ tab: 0, input: result.input })}>Load</Button></td>
-                        </tr>
-                      ))}
+                      {this.state.testResults.map(
+                        (result, i) =>
+                          result && (
+                            <tr key={i}>
+                              <td>{i}</td>
+                              <td>{result.status.description}</td>
+                              <td>
+                                {result.time == null
+                                  ? '-'
+                                  : Math.floor(result.time * 1000) + ' ms'}
+                              </td>
+                              <td>
+                                {result.memory == null
+                                  ? '-'
+                                  : result.memory + ' KB'}
+                              </td>
+                              <td>
+                                <Button
+                                  size="sm"
+                                  onClick={() =>
+                                    this.setState({
+                                      tab: 0,
+                                      input: result.input,
+                                    })
+                                  }
+                                >
+                                  Load
+                                </Button>
+                              </td>
+                            </tr>
+                          )
+                      )}
                     </tbody>
                   </Table>
                 )}
@@ -197,7 +257,8 @@ class Workspace extends Component {
                 <NavItem key={i}>
                   <NavLink
                     className={this.state.tab === i ? 'active' : ''}
-                    onClick={() => this.setTab(i)}>
+                    onClick={() => this.setTab(i)}
+                  >
                     {tabName}
                   </NavLink>
                 </NavItem>
