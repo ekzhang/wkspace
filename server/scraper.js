@@ -2,22 +2,22 @@ import assert from 'assert';
 import axios from 'axios';
 import cheerio from 'cheerio';
 
-cheerio.prototype.justtext = function () {
-  return this.clone().children().remove().end().text();
-};
-
-cheerio.prototype.textArray = function () {
-  return this.map(function () {
-    return cheerio(this).text();
-  }).toArray();
-};
-
 async function getCodeforcesProblem({ contest, problem }) {
   try {
     const url = `https://codeforces.com/contest/${contest}/problem/${problem}`;
     const response = await axios.get(url, { maxRedirects: 0 });
     assert.strictEqual(response.status, 200);
     const $ = cheerio.load(response.data);
+
+    $.prototype.justtext = function () {
+      return this.clone().children().remove().end().text();
+    };
+    $.prototype.textArray = function () {
+      return this.map(function () {
+        return $(this).text();
+      }).toArray();
+    };
+
     const statement = $('.problem-statement');
     const header = statement.find('.header');
 
