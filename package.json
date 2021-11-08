@@ -16,18 +16,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
-    "cheerio": "^1.0.0-rc.9",
+    "axios": "^0.24.0",
+    "cheerio": "1.0.0-rc.10",
     "express": "^4.17.1",
-    "mongoose": "^5.11.9"
+    "mongoose": "^6.0.12"
   },
   "devDependencies": {
-    "concurrently": "^6.1.0",
-    "nodemon": "^2.0.6",
-    "prettier": "^2.2.1"
+    "concurrently": "^6.3.0",
+    "nodemon": "^2.0.14",
+    "prettier": "2.4.1"
   },
   "engines": {
-    "node": "14",
-    "npm": "7"
+    "node": "16",
+    "npm": "8"
   }
 }
