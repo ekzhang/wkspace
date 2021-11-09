@@ -1,9 +1,9 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import path from 'path';
 import http from 'http';
 
 import api from './server/routes/api.js';
-import { connect } from './server/database.js';
 
 const dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -29,10 +29,18 @@ const port = process.env.PORT || 5000;
 app.set('port', port);
 
 // Database
-connect((err) => {
-  if (err) console.error('Error connecting to MongoDB: ' + err);
-  else {
+const databaseUri =
+  process.env.NODE_ENV === 'production'
+    ? process.env.MONGODB_URI
+    : 'mongodb://localhost:27017/workspace-db';
+
+mongoose
+  .connect(databaseUri)
+  .then(() => {
+    console.log('Connected to MongoDB.');
     const server = http.createServer(app);
     server.listen(port, () => console.log(`API running on localhost:${port}`));
-  }
-});
+  })
+  .catch((err) => {
+    console.error('Error connecting to MongoDB: ' + err);
+  });
